@@ -3701,3 +3701,39 @@ footer { display:none; }
 .history-background { margin:16px 0; font-size:14px; color:#b4ad9e; }
 .history-background summary { cursor:pointer; }
 .history-background p { line-height:1.7; }
+/* Quiet Discord shell: slim server rail and a compact channel header around one message. */
+.server-rail { display:flex!important; position:fixed; left:0; top:44px; bottom:0; width:72px; height:calc(100dvh - 44px)!important; box-sizing:border-box; padding:12px 0; gap:8px; background:#1b1b19; border-right:1px solid #11110f; z-index:5; }
+.server-rail .rail-button { width:48px; height:48px; border-radius:24px; border-width:1px; transition:border-radius .2s ease,background .2s ease; }
+.server-rail .rail-button:hover,.watchtower-desktop[data-view=guild] .rail-guild,.watchtower-desktop[data-view=civiclens] .rail-civic,.watchtower-desktop[data-view=watchtower] .rail-terminal { border-radius:14px; }
+.server-rail .rail-button:focus-visible { outline:2px solid #d1bc92; outline-offset:2px; }
+.server-rail .rail-guild { background:#2c281f; border-color:#8d744d; }
+.server-rail .rail-rule { width:32px; background:#3a3631; }
+.desktop-titlebar { background:#161614; border-bottom:1px solid #0d0d0c; min-height:44px; box-sizing:border-box; }
+.work-area { box-sizing:border-box; padding-left:72px; min-height:calc(100dvh - 44px); background:#262624; }
+.workspace { max-width:none; padding:0; margin:0; }
+.main-panels,.notebook { max-width:none; }
+.notebook { max-width:760px; margin:32px; }
+.view-panel { min-height:calc(100dvh - 44px); }
+body[data-view="guild"] .guild-panel { background:#262624; display:flex; flex-direction:column; }
+body[data-view="guild"] .guild-panel .panel-header,.guild-panel .panel-header { background:#262624!important; padding:0 20px!important; height:48px; display:flex; align-items:center; border-bottom:1px solid #191917; box-shadow:0 1px 0 #2f2b25; }
+.channel-heading { display:flex; align-items:center; gap:8px; min-width:0; }
+.channel-heading .hash { display:inline!important; color:#8a8170; font-size:22px; font-weight:300; line-height:1; }
+.channel-heading h2 { font-family:inherit!important; font-size:16px!important; font-weight:600; color:#ece4d2!important; margin:0; }
+.channel-server { color:#958c7c; font-size:13px; padding-left:12px; margin-left:4px; border-left:1px solid #48433b; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.message-list { padding:0 20px!important; max-width:780px; }
+.guild-message { margin:32px 0 0; min-height:0; }
+.reading-controls { margin:8px 20px 0!important; padding:16px 0 24px 52px; border-top:0!important; max-width:740px; justify-content:flex-start!important; }
+.guild-next { margin:0 20px 24px!important; padding-left:52px!important; justify-content:flex-start!important; max-width:740px; }
+.civic-panel,.watchtower-panel { margin:0; }
+@media(max-width:760px) {
+ .server-rail { width:56px; padding:10px 0; }
+ .server-rail .rail-button { width:40px; height:40px; }
+ .server-rail .guild-rail-icon { width:22px; height:28px; }
+ .work-area { padding-left:56px; }
+ .channel-server { display:none; }
+ .guild-panel .panel-header { padding:0 16px!important; }
+ .message-list { padding:0 16px!important; }
+ .reading-controls,.guild-next { margin-left:16px!important; margin-right:16px!important; }
+ .notebook { margin:16px; }
+}
+.guild-next .button { margin-left:0!important; }
