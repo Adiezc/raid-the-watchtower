@@ -85,7 +85,7 @@ def main():
     Handler.vulnerable = args.vulnerable
     server = ThreadingHTTPServer(("127.0.0.1", args.port), Handler)
     mode = "VULNERABLE (flaw active)" if args.vulnerable else "protected (default)"
-    print("Raid the Watchtower lab — mode: %s" % mode)
+    print("Raid the Watchtower lab, mode: %s" % mode)
     print("http://127.0.0.1:%d/api/dossiers   (Ctrl+C to stop)" % args.port)
     try:
         server.serve_forever()

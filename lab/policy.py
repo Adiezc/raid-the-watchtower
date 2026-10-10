@@ -7,7 +7,7 @@ forgets to check *whether you are allowed this specific record* (authorization).
 `can_read_dossier` is the one function that decides it.
 
 - Protected (default): a caller may read a record only if the record is in the
-  caller's own workspace, or the caller is an operator (operators review every
+  caller's own workspace or the caller is an operator (operators review every
   workspace). Authentication alone is not enough.
 - Vulnerable (``vulnerable=True``): the check is skipped, so any signed-in
   account can read any record. This is the deliberate flaw, kept behind an

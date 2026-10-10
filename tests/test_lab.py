@@ -1,5 +1,5 @@
 """Checks for the BOLA lab: the flaw is real in vulnerable mode and closed in
-protected mode, and legitimate access is preserved either way."""
+protected mode. Legitimate access is preserved either way."""
 
 import json
 import threading
