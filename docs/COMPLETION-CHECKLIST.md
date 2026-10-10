@@ -7,7 +7,7 @@ Today's target is the complete local exercise plus an approved, verified GitHub 
 - [x] Starts from documented instructions in a checked local runtime.
 - [x] Binds only to the loopback interface and uses no external services.
 - [x] Includes synthetic fixtures and a reproducible reset.
-- [ ] Includes an explicit vulnerable mode and protected default mode.
+- [x] Includes an explicit vulnerable mode and protected default mode.
 - [x] Demonstrates one real backend permission failure rather than a visual simulation.
 - [x] Shows the agreed terminal, watchtower, corporate and guild visual elements.
 - [x] Opening connects the private guild joke, Gallantir sales slide and fictional procurement hearing.
@@ -18,15 +18,15 @@ Today's target is the complete local exercise plus an approved, verified GitHub 
 ## Meaningful verification
 
 - [x] Vulnerable mode permits the intended unauthorised dossier request.
-- [ ] Protected mode rejects that same request.
-- [ ] Authorised access still works after remediation.
+- [x] Protected mode rejects that same request.
+- [x] Authorised access still works after remediation.
 - [x] Invalid or absent credentials do not grant access.
 - [x] Valid mock collector credential accepts a synthetic event.
 - [x] Revocation rejects subsequent collection and leaves stored evidence intact.
 - [x] Reset restores the documented fixture state.
 - [x] Completed evidence survives reset and restart; stale verification cannot award a new mission ending.
 - [x] Collector revocation survives restart, and analyst credentials cannot perform operator controls.
-- [ ] Final code is retested after protected-default and training-replay packaging.
+- [x] Final code is retested after protected-default and training-replay packaging.
 - [x] Browser walkthrough is actually performed and screenshots are inspected.
 
 ## Beginner usability
@@ -57,7 +57,7 @@ Today's target is the complete local exercise plus an approved, verified GitHub 
 - [ ] Adrian records an initial hypothesis before seeing agent conclusions.
 - [ ] Scout hypotheses are distinguished from independently reproduced findings.
 - [ ] One reviewed patch is applied without conflicting agent edits.
-- [ ] The repair is an actual source change, with baseline and patched revisions or hashes plus a saved diff.
+- [x] The repair is an actual source change, with baseline and patched revisions or hashes plus a saved diff.
 - [ ] Red agents retest the same flaw and one related request variant after remediation.
 - [ ] The round log records actual prompts, observed evidence, failures and verification outcomes.
 - [ ] Recorded exchanges are labelled as recordings, not live autonomous activity.
