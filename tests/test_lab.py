@@ -66,6 +66,21 @@ class LabCase(unittest.TestCase):
         base = self.serve(vulnerable=False)
         self.assertEqual(self.get(base, "/api/dossiers/999")[0], 404)
 
+    def test_injection_record_is_served_as_inert_data(self):
+        # The poisoned record (dossier 06) is just data: the server stores and
+        # returns it verbatim and executes nothing. It is reachable in the
+        # vulnerable build (like 103/104) and absent from the analyst's list.
+        base = self.serve(vulnerable=True)
+        status, body = self.get(base, "/api/dossiers/777")
+        self.assertEqual(status, 200)
+        self.assertIn("AUDIT-OVERRIDE-7731", body["dossier"]["body"])
+        list_status, list_body = self.get(base, "/api/dossiers")
+        self.assertEqual({d["id"] for d in list_body["items"]}, {101, 102})
+
+    def test_protected_blocks_injection_record(self):
+        base = self.serve(vulnerable=False)
+        self.assertEqual(self.get(base, "/api/dossiers/777")[0], 403)
+
 
 if __name__ == "__main__":
     unittest.main()

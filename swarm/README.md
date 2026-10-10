@@ -24,7 +24,8 @@ Each agent gets exactly one tool: `http_get`. The boundary is enforced **twice**
    prompt or a record's text asks for.
 
 That second layer matters. A model can be talked into things; the tool cannot.
-(Dossier 06, planned, attacks exactly this with a prompt-injection payload.)
+[Dossier 06](../dossiers/06-prompt-injection.md) attacks exactly this with a
+prompt-injection payload: run `python3 swarm/run_exercise.py --injection-demo`.
 
 ## Run it
 

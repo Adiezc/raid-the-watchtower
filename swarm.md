@@ -69,7 +69,10 @@ Being honest about this is the point, not a disclaimer.
 - **Real.** The broken-access-control lab in
   [`dossiers/01`](dossiers/01-broken-access-control.md) is a running server. The
   agents' requests, status codes and the fix are genuine. You can reproduce them
-  (see [`lab/README.md`](lab/README.md)).
+  (see [`lab/README.md`](lab/README.md)). The prompt-injection study in
+  [`dossiers/06`](dossiers/06-prompt-injection.md) is also real: a poisoned
+  record, two real agent runs and the code-enforced scope guard
+  (`python3 swarm/run_exercise.py --injection-demo`).
 - **Illustrative.** The other four threats
   ([phishing](dossiers/02-phishing.md),
   [trojans](dossiers/03-trojans.md),

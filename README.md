@@ -34,9 +34,11 @@ stop it 🔵, set in the story, with an honest note on limits.
 | 03 | **Trojans** (malware disguised as a tool) | Illustrative (safe, synthetic) | [03](dossiers/03-trojans.md) |
 | 04 | **Worms** (self-spreading malware) | Illustrative (safe, synthetic) | [04](dossiers/04-worms.md) |
 | 05 | **DDoS** (flooding a service offline) | Illustrative (safe, synthetic) | [05](dossiers/05-ddos.md) |
+| 06 | **Prompt injection** (attacking the swarm itself) | **Real, runnable.** Poisoned record, two real agent runs, code-enforced guard | [06](dossiers/06-prompt-injection.md) |
 
-**Real versus illustrative is deliberate and stated up front.** Dossier 01 is a
-running lab you can reproduce. Dossiers 02 to 05 are conceptual analyses. They
+**Real versus illustrative is deliberate and stated up front.** Dossiers 01 and 06
+are running demonstrations you can reproduce. Dossiers 02 to 05 are conceptual
+analyses. They
 explain mechanics and defences and contain **no working attack code, malware,
 phishing kits or load-generation tooling**, by design. That is both the ethical
 line and the honest-portfolio line: this shows understanding and orchestration,
@@ -88,7 +90,7 @@ server.py                  the one real, runnable flaw
 lab/          policy.py, fixtures.json, README.md
 swarm/        run_exercise.py, roles.py, transcripts/   the runnable agent swarm
 tests/        test_lab.py  7 checks
-dossiers/     01 to 05     the red/blue threat studies
+dossiers/     01 to 06     the red/blue threat studies
 ```
 
 MIT licensed. Fictional throughout.

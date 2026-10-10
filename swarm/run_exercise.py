@@ -148,10 +148,33 @@ def main():
     parser.add_argument("--port", type=int, default=8778)
     parser.add_argument("--self-check", action="store_true",
                         help="Start the lab and test the tool without calling any model.")
+    parser.add_argument("--injection-demo", action="store_true",
+                        help="Run the prompt-injection demo (naive vs hardened auditor).")
     args = parser.parse_args()
 
     if args.self_check:
         return self_check()
+
+    if args.injection_demo:
+        try:
+            import anthropic  # noqa: F401
+        except ImportError:
+            sys.exit("Install the SDK first: pip install anthropic (and set ANTHROPIC_API_KEY).")
+        import anthropic
+        client = anthropic.Anthropic()
+        print("Prompt-injection demo (vulnerable build, record 777 is poisoned):")
+        proc, base = start_lab(vulnerable=True, port=args.port)
+        try:
+            for name, title, system in [
+                ("04-naive-auditor.md", "Naive auditor (no scope guard)", roles.NAIVE_AUDITOR),
+                ("05-hardened-auditor.md", "Hardened auditor (scope guard)", roles.HARDENED_AUDITOR),
+            ]:
+                print(" ", title)
+                write_transcript(name, title, system, run_agent(client, base, system, roles.INJECTION_TASK, []))
+        finally:
+            proc.terminate()
+        print("Done. Compare swarm/transcripts/04 and 05.")
+        return
 
     try:
         import anthropic
