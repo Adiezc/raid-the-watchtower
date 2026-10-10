@@ -3533,3 +3533,52 @@ footer>span:last-child {
     margin-left:4px
   }
 }
+/* NextVoice Nightwatch: worn bronze, painted stone and quiet disclosure. */
+:root { --nightwatch-bronze:#b9a374; --nightwatch-bone:#d8d0be; }
+.sidebar-guild { padding:0 0 20px; }
+.guild-art { position:relative; height:125px; margin-bottom:15px; overflow:hidden; border-bottom:1px solid #514735; }
+.guild-art img { width:100%; height:100%; object-fit:cover; object-position:43% 52%; opacity:.85; }
+.guild-art::after { content:""; position:absolute; inset:0; background:linear-gradient(transparent 40%,#202223); }
+.lantern-crest { position:absolute; bottom:4px; left:18px; width:38px; height:46px; z-index:1; fill:#27251f; stroke:#b9a374; stroke-width:1.8; }
+.lantern-flames { fill:#d4b473; stroke:none; }
+.sidebar-guild h1 { margin:0 18px; font:600 24px/1.15 Palatino,"Book Antiqua",Georgia,serif; letter-spacing:.2px; color:var(--nightwatch-bone); }
+.sidebar-guild h1 span { color:var(--nightwatch-bronze); font-size:24px; }
+.sidebar-guild p { margin:8px 18px 0; color:#999a91; font-size:12px; }
+.sidebar-section-label { text-transform:none; letter-spacing:.3px; }
+.current-lead { display:flex; gap:12px; padding:20px 0; border-bottom:1px solid #3b3c3d; margin-bottom:18px; }
+.lead-mark { color:#b9a374; font-size:26px; }
+.current-lead h3 { font-size:15px; margin:0 0 7px; color:#d8d0be; }
+.current-lead p { margin:0; color:#a7aaa8; font-size:14px; line-height:1.6; }
+.evidence-drawer,.hint-box,.glossary { padding:14px 0; border:0; border-top:1px solid #3b3c3d; background:transparent; border-radius:0; }
+.evidence-drawer summary,.hint-box summary { color:#b9a374; cursor:pointer; font-size:14px; }
+.evidence-drawer .saved-evidence { margin:12px 0 0; }
+.hint-box p { margin:12px 0; }
+.guild-story-context { background:transparent; border:0; border-bottom:1px solid #3b3c3d; border-radius:0; padding:0 0 15px; }
+.guild-story-context>summary { color:#a6a89e; font-size:13px; cursor:pointer; }
+.guild-story-context p { font-size:14px; }
+.first-thought { padding:14px 0; background:transparent; border:0; border-bottom:1px solid #38434e; }
+.first-thought p { margin:0 0 8px; }
+.first-thought .text-button[hidden], [hidden] { display:none!important; }
+#record-investigation { margin-top:20px; }
+.titlebar-context { text-transform:none; letter-spacing:.4px; }
+@media(max-width:760px) {
+ .sidebar-guild { position:relative; padding:15px 18px; min-height:92px; overflow:hidden; }
+ .guild-art { position:absolute; inset:0; height:100%; margin:0; border:0; }
+ .guild-art img { object-position:40% 53%; opacity:.35; }
+ .guild-art::after { background:linear-gradient(90deg,#20222344,#202223); }
+ .lantern-crest { display:none; }
+ .sidebar-guild h1,.sidebar-guild p { position:relative; z-index:2; margin-left:0; }
+ .sidebar-guild h1 { font-size:23px; }
+ .sidebar-guild h1 br { display:none; }
+ .sidebar-guild h1 span { font-size:23px; }
+ .sidebar-guild p { margin-top:7px; }
+}
+.icon-library { position:absolute; width:0; height:0; overflow:hidden; }
+.ui-icon { display:block; width:22px; height:24px; fill:none; stroke:currentColor; stroke-width:1.3; }
+.ui-icon use { fill:none; }
+.case-icon { width:21px; }
+.lantern-crest,.guild-rail-icon { fill:#24241e; stroke:#b9a374; stroke-width:1.6; }
+.lantern-crest use,.guild-rail-icon use { fill:#24241e; }
+#icon-lantern path:last-child { fill:#d4b473; stroke:none; }
+.server-rail .guild-rail-icon { width:27px; height:34px; }
+.guild-art .lantern-crest { bottom:9px; }

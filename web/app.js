@@ -136,7 +136,32 @@
     if (name !== "guild") state.storySeen = true;
     if (setHash && location.hash !== `#${name}`) history.replaceState(null, "", `#${name}`);
     renderProgress();
+    renderGuidance();
     if (focus) $("#main-content").focus({ preventScroll: true });
+  }
+  function renderGuidance() {
+    const evidence = state.mission?.evidence || [];
+    const notes = latestNotes();
+    const clue = evidence.some(item => item.kind === "clue");
+    const noted = Boolean(notes.observation?.trim() && notes.hypothesis?.trim());
+    const found = evidence.some(item => item.kind === "restricted-dossier");
+    const advanced = noted || found || Boolean(state.response);
+    $("#record-investigation").hidden = !advanced;
+    $("#notes-form").hidden = !(state.dirty || ((clue || noted || found) && state.currentView !== "guild"));
+    $("#evidence-drawer").hidden = !evidence.length;
+    $("#verification-panel").hidden = !state.mission?.verification;
+    $("[data-focus-notebook]").hidden = !clue;
+    $("#thought-prompt").textContent = noted ? "Your first thought is saved. The record tools are ready below." : clue ? "Clue saved. Write a short first thought in your case file. Being unsure is fine." : "Compare this slide with the conversation, then save the clue.";
+    $("#save-clue").textContent = clue ? "Clue saved ✓" : "Save this clue";
+    const lead = state.currentView === "guild" ? ["Read the guild conversation", "Then open Mira’s company slide."] : state.currentView === "watchtower" ? found ? ["Discuss your finding", "Codex will guide the review and repair."] : ["Investigate first", "Return here after saving a record response that supports your finding."] : found ? ["Finding preserved", "Explain it in your notes, then visit the watchtower."] : noted ? ["Test your explanation", "Open a permitted record, then compare a reference from the slide."] : clue ? ["Your first thought", "What did you notice? What might explain it?"] : ["Compare the two clues", "Read the slide alongside the guild conversation."];
+    $("#lead-title").textContent = lead[0];
+    $("#lead-copy").textContent = lead[1];
+    $("#focus-notebook").hidden = !found;
+    $("#continue-investigation").hidden = found;
+    $(".investigation-card h3").textContent = found ? "What have you discovered?" : "The investigation comes first";
+    $(".investigation-card p").textContent = found ? "Save your finding in the case file, then discuss it with Codex." : "Return here to defend the guild after preserving your finding.";
+    $(".responder-section").hidden = !found && !state.responderToken;
+    $(".role-divider").hidden = !found && !state.responderToken;
   }
   function renderProgress() {
     const evidence = state.mission?.evidence || [];
@@ -170,8 +195,8 @@
       item.append(avatar, content);
       return item;
     });
-    const intro = make("div", null, "guild-story-context");
-    intro.append(make("span", "PINNED BRIEFING", "pinned-label"), make("p", "NextVoice campaigns against monitoring young people's political activity. Guild members meet here to play. Gallantir sells the monitoring system and wants to anticipate NextVoice's objections."));
+    const intro = make("details", null, "guild-story-context");
+    intro.append(make("summary", "Why this conversation matters"), make("p", "NextVoice campaigns against monitoring young people's political activity. Guild members meet here to play. Gallantir sells the monitoring system and wants to anticipate NextVoice's objections."));
     const vocabulary = make("details", null, "story-vocabulary");
     vocabulary.append(make("summary", "A few words from the story"), make("p", "Procurement means buying these monitoring systems. A raid is a cooperative game mission; a wipe means the team loses and tries again."));
     intro.append(vocabulary);
@@ -262,6 +287,7 @@
     $("#verification-technical").hidden = !verification;
     if (verification) $("#verification-json").textContent = JSON.stringify(verification, null, 2);
     renderProgress();
+    renderGuidance();
   }
   async function refreshMission() {
     state.mission = await requireRequest("/api/mission/status");
@@ -437,8 +463,8 @@
     $("#beginner-help").hidden = !open;
     $("#show-help").setAttribute("aria-expanded", String(open));
   });
-  $("#focus-notebook").addEventListener("click", () => { $("#observation").focus(); });
-  $$('[data-focus-notebook]').forEach((button) => button.addEventListener("click", () => { $("#observation").focus(); }));
+  $("#focus-notebook").addEventListener("click", () => { $("#notes-form").hidden = false; $("#observation").focus(); });
+  $$('[data-focus-notebook]').forEach((button) => button.addEventListener("click", () => { $("#notes-form").hidden = false; $("#observation").focus(); }));
   $("#save-clue").addEventListener("click", () => saveEvidence({ kind: "clue" }, $("#save-clue")));
   $("#record-form").addEventListener("submit", (event) => { event.preventDefault(); openRecord(Number($("#record-reference").value)); });
   $("#save-record").addEventListener("click", () => { if (state.response?.data?.request_id) saveEvidence({ request_id: state.response.data.request_id }, $("#save-record")); });

@@ -22,6 +22,7 @@ OPERATOR_TOKEN = 'watchtower-warden-demo'
 COLLECTOR_TOKEN = 'raid-companion-demo-key'
 STATIC = {'/': ('index.html', 'text/html; charset=utf-8'), '/index.html': ('index.html', 'text/html; charset=utf-8'),
           '/styles.css': ('styles.css', 'text/css; charset=utf-8'), '/app.js': ('app.js', 'text/javascript; charset=utf-8'),
+          '/nightwatch-hall.png': ('nightwatch-hall.png', 'image/png'),
           '/watchtower.svg': ('watchtower.svg', 'image/svg+xml'), '/favicon.ico': ('watchtower.svg', 'image/svg+xml')}
 
 

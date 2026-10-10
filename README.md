@@ -6,7 +6,7 @@ A fictional cybersecurity lab about defending a youth rights community from intr
 
 ## The premise
 
-NextVoice is a broader youth rights organisation. Some members meet in an MMO guild to have fun and stay connected globally. Their guild chats and community Discord have encountered increased surveillance.
+NextVoice is a broader youth rights organisation. Some members meet in their MMO guild NextVoice Nightwatch to have fun and stay connected globally. Their guild chats and community Discord have encountered increased surveillance.
 
 Gallantir, a fictional intelligence contractor, markets its CivicLens platform as a noble protector of communities. NextVoice's campaign against purchases of systems that profile young people's political activity has caused potential customers to pause negotiations. Gallantir's leadership knowingly uses surveillance to protect sales. A raid companion add-on quietly forwards synthetic guild conversations into CivicLens.
 
@@ -32,6 +32,7 @@ All organisations, people, messages, allegations and records are fictional. Disc
 - [Continuation notes](docs/HANDOFF.md)
 - [Optional progressive hints](docs/HINTS.md)
 - [Sources and limits](docs/SOURCES.md)
+- [Art direction, design skill and artwork attribution](docs/ART-DIRECTION.md)
 
 ## Setup for technical reviewers
 

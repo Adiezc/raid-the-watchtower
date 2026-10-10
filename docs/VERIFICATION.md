@@ -43,6 +43,12 @@ The coordinator tested the redesign in a separate `var/ui-review.sqlite3` run at
 
 All three views were inspected at a 390 by 844 viewport without horizontal overflow. The desktop recheck also measured document width equal to the 1280px viewport. Message and note-input fonts measured 14px. Keyboard navigation selected the correct view and browser warning/error logs were empty. Temporary viewport overrides were reset. The refreshed participant client kept the original empty run and returned to Guild commons. Desktop screenshots of all three views and a full starting view were saved and inspected.
 
+## Art and gradual introduction
+
+The Frontend Design and imagegen skills informed the NextVoice Nightwatch pass. The original painted hall and local lantern, prism and case-file symbols were visually inspected. The only new server static route is an explicit image allowlist entry. The participant server was restarted with its existing database, preserving run `run-2f9b7fa90656` and its empty notes, evidence and assistance.
+
+A separate `var/design-qa.sqlite3` run at port 8766 verified the initial conversation, slide-only opening, clue-triggered notes, saved-note-triggered record controls, an actual restricted response saved as evidence and the resulting responder invitation. Reload restored this progress. An unsaved note revision survived location changes. The narrow 390px viewport measured no horizontal overflow. Desktop screens were inspected and browser warnings/errors were empty. All ten automated baseline checks passed in 5.302 seconds and JavaScript syntax passed. These are builder checks only.
+
 ## Participant and defensive verification
 
 Not started. The actual source patch, agent requests, participant observations, containment and protected retests will be added after they occur.
