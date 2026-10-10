@@ -3737,3 +3737,8 @@ body[data-view="guild"] .guild-panel .panel-header,.guild-panel .panel-header { 
  .notebook { margin:16px; }
 }
 .guild-next .button { margin-left:0!important; }
+/* Feedback: buttons press, and a newly shown message settles in so the change is noticed. */
+.button,.text-button,.rail-button { transition:background-color .2s cubic-bezier(.16,1,.3,1),border-color .2s cubic-bezier(.16,1,.3,1),border-radius .2s cubic-bezier(.16,1,.3,1),transform .12s ease; }
+.button:active:not(:disabled),.rail-button:active { transform:translateY(1px); }
+@keyframes message-settle { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:none; } }
+.guild-message:not([hidden]) { animation:message-settle .32s cubic-bezier(.16,1,.3,1); }
