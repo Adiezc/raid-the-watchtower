@@ -45,3 +45,16 @@ Gallantir is the fictional antagonist. NextVoice is a broader youth rights organ
 The user wants both offensive discovery and a protective outcome, a playable lab and a report. Codex prepares the lab and guides the user. The earlier four-hour estimate is superseded by the schedule ending at 20:00, including publication, archival and contingency. Simplify presentation if needed.
 
 The story is agreed and saved in STORY.md. NextVoice challenges purchases of systems profiling young people's political activity. Gallantir's leadership knowingly surveils it to protect sales, using a raid companion add-on. A private guild joke appears in a sales presentation as a risk indicator. NextVoice's procurement hearing is tomorrow in the fictional timeline. The chosen success ending is Victory With Loose Ends: Collection stops and one fictional sale is paused, while Gallantir remains powerful. Retain three evidence-based endings with incomplete attempts separately labelled. Story facts are synthetic narrative premises; real learning and security results require recorded requests, source repair and retests.
+
+## Update — 10 October 2026, 16:57 CEST
+
+Completed since the last note:
+
+- Opening guild messages rewritten so the story explains itself (who NextVoice and Gallantir are, the campaign, the leaked private joke) without the background panel. Six messages; the joke wording is unchanged because the slide quotes it.
+- Discord shell restored: slim 72px server rail (guild, CivicLens, watchtower) and a compact `# guild-commons` channel header around the single active message. No channel text sidebar, composer or invented live activity. Verified at desktop and 375px.
+- Favicon, button press feedback and a message settle transition added; reduced-motion respected.
+- Permission flaw repaired in `lab/policy.py` (commit `5546f6e`): access is decided by workspace and role, not authentication alone. Protected build is the default; the flaw stays reachable only with `--training-vulnerable`. The obsolete pre-repair startup guard was removed.
+- Tests: 13 pass (10 baseline + 3 protected-mode). Real before/after HTTP evidence and an end-to-end protected run (all six mission checks pass) are recorded in AGENT-ROUND-LOG.md and VERIFICATION.md.
+- README, VERIFICATION, COMPLETION-CHECKLIST and the three desktop screenshots refreshed to match the repaired protected build.
+
+Still pending: Adrian's own guided walkthrough (first thoughts, saved restricted-dossier evidence, guided revocation retest), and the publication/release/archival steps, which still require Adrian's explicit approval against concrete content. The lab is reset and running the protected default build (`run-0e9020d60a6d`); relaunch with `--training-vulnerable` for the investigation walkthrough.
