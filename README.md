@@ -2,7 +2,7 @@
 
 A fictional cybersecurity lab about defending a youth rights community from intrusive surveillance.
 
-**Status: The beginner browser lab is ready. Ten automated checks and the builder browser walkthrough pass. Adrian's investigation, real source repair and final release remain to be completed.**
+**Status: The beginner browser lab is ready and the permission flaw has been repaired. The protected build is the default, and all 13 automated checks plus an end-to-end protected-build verification pass. Adrian's own guided investigation and the final release remain to be completed.**
 
 ## The premise
 
@@ -20,7 +20,7 @@ All organisations, people, messages, allegations and records are fictional. Disc
 
 - No technical experience is required for the guided session. Codex handles setup and the source repair. You use the browser, read clues and describe what you notice.
 - On this Mac, [Start Training Lab.command](Start%20Training%20Lab.command) launches the explicit educational version and opens your default browser. Keep its window open while playing. If Codex has already started the lab, use the supplied browser link instead.
-- The current baseline deliberately contains one permission flaw. Protected startup will be added by the real blue-agent repair during the session. This is not yet a completed release.
+- The permission flaw has been repaired in `lab/policy.py`, so protected startup is now the default. The deliberate flaw stays reachable only with `--training-vulnerable`, for the explicit educational replay. This is not yet a completed public release.
 
 ![The beginner starting screen](docs/screenshots/guild-start.jpg)
 
@@ -55,7 +55,7 @@ The supplied analyst token is `analyst-demo-token`. Operator and collector crede
 
 ## Verification and attribution
 
-Ten baseline checks passed on 10 October 2026. They cover the real permission failure, authentication, role boundaries, collector acceptance and revocation, restart/reset behaviour, evidence exports, hint recording and verification freshness. The protected source repair, actual participant walkthrough and live red/blue exercise remain pending.
+Thirteen automated checks pass: the ten baseline checks (real permission failure, authentication, role boundaries, collector acceptance and revocation, restart/reset behaviour, evidence exports, hint recording and verification freshness) plus three protected-mode checks confirming the repaired boundary blocks cross-workspace reads, preserves operator review and still returns 404 for a missing file. An end-to-end run against the protected build passes all six mission checks. Adrian's own guided walkthrough remains pending. See the agent round log for the recorded blue defence and its before/after evidence.
 
 Codex agents implement the lab and its interface. Adrian directs and performs the guided investigation. The report will distinguish the work each actually completed. Builder QA is kept separate from participant evidence. See [the agent round log](docs/AGENT-ROUND-LOG.md).
 

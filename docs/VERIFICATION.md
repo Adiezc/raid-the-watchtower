@@ -47,7 +47,7 @@ All three views were inspected at a 390 by 844 viewport without horizontal overf
 
 The Frontend Design and imagegen skills informed the NextVoice Nightwatch pass. The original painted hall and local lantern, prism and case-file symbols were visually inspected. The only new server static route is an explicit image allowlist entry. The participant server was restarted with its existing database, preserving run `run-2f9b7fa90656` and its empty notes, evidence and assistance.
 
-A separate `var/design-qa.sqlite3` run at port 8766 verified the initial conversation, slide-only opening, clue-triggered notes, saved-note-triggered record controls, an actual restricted response saved as evidence and the resulting responder invitation. Reload restored this progress. An unsaved note revision survived location changes. The narrow 390px viewport measured no horizontal overflow. Desktop screens were inspected and browser warnings/errors were empty. All ten automated baseline checks passed in 5.302 seconds and JavaScript syntax passed. These are builder checks only.
+A separate `var/design-qa.sqlite3` run at port 8766 verified the initial conversation, slide-only opening, clue-triggered notes, saved-note-triggered record controls, an actual restricted response saved as evidence and the resulting responder invitation. Reload restored this progress. An unsaved note revision survived location changes. The narrow 390px viewport measured no horizontal overflow. Desktop screens were inspected and browser warnings/errors were empty. All automated baseline checks passed and JavaScript syntax passed. These are builder checks only.
 
 ## Participant and defensive verification
 
@@ -72,3 +72,20 @@ Desktop and mobile screens were visually inspected. A mobile grid regression was
 ## History instead of side text
 
 The persistent sidebars and header controls were consolidated into a native History & tools dialog. Only the current message and continuation remain on the opening screen. A separate builder run verified next-message progression, position/history surviving reload, rereading an earlier message and reopening the saved company slide after notes had been saved. The mobile recheck measured a 390px document and a 350px dialog within the 390px viewport. Temporary viewport overrides were reset and the QA server stopped. HTML structure, unique IDs, JavaScript syntax and whitespace checks passed.
+
+## Protected build (after the repair)
+
+Checked on 10 October 2026. Repair commit: `5546f6e`.
+
+Command: `python3 -m unittest discover -s tests -v`.
+
+Result: 13 checks pass (the 10 baseline checks plus 3 protected-mode checks) in about 6.9 seconds.
+
+The protected-mode checks establish:
+
+- The analyst reads only its own workspace files (101, 102) and is refused (HTTP 403) on every restricted file (103, 104, 105, 106).
+- The operator still reads every workspace, so legitimate review is preserved.
+- A missing file still returns 404, not 403, so the repair adds no new 403/404 oracle.
+- The default startup (no flag) serves the protected, defended build.
+
+An end-to-end run against the running protected build (real HTTP on 127.0.0.1:8765, fresh reset) confirmed authentication rejection, the full access boundary, operator review, collector acceptance before revocation and rejection after, the analyst role boundary on revocation, and all six mission verification checks passing. See `docs/AGENT-ROUND-LOG.md` for the recorded evidence.
