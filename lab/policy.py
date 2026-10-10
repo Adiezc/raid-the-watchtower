@@ -1,35 +1,26 @@
-"""The active training permission boundary.
+"""The access-control decision at the heart of the lab.
 
-Baseline flaw (now repaired): the endpoint authenticated a caller but never
-checked whether that caller was allowed to read the requested dossier, so any
-signed-in account could open every restricted file. This is a broken
-object-level authorisation failure (BOLA / IDOR).
+The flaw this project demonstrates is **broken object-level authorization**
+(BOLA, also called IDOR): the server checks *who you are* (authentication) but
+forgets to check *whether you are allowed this specific record* (authorization).
 
-The repair below decides access from the dossier's workspace and the account's
-role, not merely from the presence of a valid token. The deliberate flaw is
-still reachable, but only when the lab is started with the explicit
-``--training-vulnerable`` flag, so the insecure version remains available for
-the explicit educational replay while the protected build is the default.
+`can_read_dossier` is the one function that decides it.
+
+- Protected (default): a caller may read a record only if the record is in the
+  caller's own workspace, or the caller is an operator (operators review every
+  workspace). Authentication alone is not enough.
+- Vulnerable (``vulnerable=True``): the check is skipped, so any signed-in
+  account can read any record. This is the deliberate flaw, kept behind an
+  explicit flag so the insecure behaviour can be demonstrated on purpose.
 """
 
-PROTECTED_IMPLEMENTED = True
 
-
-def can_read_dossier(account, dossier, training_vulnerable=False):
-    """Return whether ``account`` may read ``dossier``.
-
-    Protected rule: a caller may read a dossier only when the dossier belongs to
-    the caller's own workspace, or the caller holds the operator role (operators
-    review every workspace). Authentication alone is not sufficient.
-
-    When ``training_vulnerable`` is set, the original flaw is reproduced so the
-    explicit training replay can demonstrate the insecure behaviour.
-    """
+def can_read_dossier(account, dossier, vulnerable=False):
     if account is None or dossier is None:
         return False
-    if training_vulnerable:
-        # Deliberately insecure baseline, kept for the educational replay only.
+    if vulnerable:
+        # Deliberately insecure: no per-record check. Reachable only via --vulnerable.
         return True
-    if account.get('role') == 'operator':
+    if account.get("role") == "operator":
         return True
-    return dossier.get('workspace') == account.get('workspace')
+    return dossier.get("workspace") == account.get("workspace")

@@ -1,74 +1,92 @@
 # Raid the Watchtower
 
-A fictional cybersecurity lab about defending a youth rights community from intrusive surveillance.
+**An AI agent swarm, directed by a human, red-teams and blue-teams a set of
+security threats — wrapped in a short fictional story.**
 
-**Status: Complete. The beginner browser lab works, the permission flaw is repaired (the protected build is the default), all 13 automated checks pass, and the lab has been verified end to end through the Victory ending, including a recorded red/blue AI-agent round. See the [report](docs/REPORT.md) and [verification record](docs/VERIFICATION.md) for the full, honest account of what was done and by whom.**
+This is a portfolio project. It showcases two things: an understanding of how
+common attacks work and how you defend against them, and the use of an **AI
+red/blue agent swarm** to do that analysis — with a person in the loop to direct
+the rounds and decide what to trust. One threat is a real, runnable lab; the rest
+are safe, synthetic studies. Everything here is fictional and defensive.
 
-## The premise
+> New to the project? Read [`story.md`](story.md) for the world, then
+> [`swarm.md`](swarm.md) for how the agent team works. Then pick a dossier.
 
-NextVoice is a broader youth rights organisation. Some members meet in their MMO guild NextVoice Nightwatch to have fun and stay connected globally. Their guild chats and community Discord have encountered increased surveillance.
+## The idea in one minute
 
-Gallantir, a fictional intelligence contractor, markets its CivicLens platform as a noble protector of communities. NextVoice's campaign against purchases of systems that profile young people's political activity has caused potential customers to pause negotiations. Gallantir's leadership knowingly uses surveillance to protect sales. A raid companion add-on quietly forwards synthetic guild conversations into CivicLens.
+Security is moving toward AI-assisted offence and defence. The real skill is no
+longer only "write a payload" — it is **directing a team of specialised agents,
+keeping them in scope, and verifying what they produce.** This project is a small,
+honest demonstration of exactly that: a red scout and validator find and confirm,
+a blue defender fixes and proves it, and a human coordinator sets scope and calls
+what's real. See [`swarm.md`](swarm.md).
 
-The opening clue is a private guild joke quoted as a risk indicator in a Gallantir sales presentation. NextVoice presents its procurement objections tomorrow, while Gallantir prepares a rebuttal using unpublished arguments. The mission has three possible endings. The successful ending stops collection and pauses one fictional sale, while Gallantir remains powerful.
+## The threats (dossiers)
 
-Your mission is to uncover evidence of this collection, demonstrate a permission failure in the local platform and protect the community by cutting off the mock data feed and fixing the access boundary.
+Each dossier is a red/blue study: how the attack works 🔴 and how you detect and
+stop it 🔵, set in the story, with an honest note on limits.
 
-All organisations, people, messages, allegations and records are fictional. Discord is referenced as part of the story. The lab uses a Discord-style mock interface and never connects to Discord, an MMO or any external service. Gallantir is not affiliated with any real company.
+| # | Threat | Real or illustrative | Dossier |
+| --- | --- | --- | --- |
+| 01 | **Broken access control** (BOLA / IDOR) | **Real, runnable** — live server, real agent run, real fix | [01](dossiers/01-broken-access-control.md) |
+| 02 | **Phishing** (credential theft) | Illustrative (safe, synthetic) | [02](dossiers/02-phishing.md) |
+| 03 | **Trojans** (malware disguised as a tool) | Illustrative (safe, synthetic) | [03](dossiers/03-trojans.md) |
+| 04 | **Worms** (self-spreading malware) | Illustrative (safe, synthetic) | [04](dossiers/04-worms.md) |
+| 05 | **DDoS** (flooding a service offline) | Illustrative (safe, synthetic) | [05](dossiers/05-ddos.md) |
 
-## Start here
+**Real vs illustrative is deliberate and stated up front.** Dossier 01 is a
+running lab you can reproduce. Dossiers 02–05 are conceptual analyses — they
+explain mechanics and defences and contain **no working attack code, malware,
+phishing kits or load-generation tooling**, by design. That is both the ethical
+line and the honest-portfolio line: this shows understanding and orchestration,
+not a weapons cache.
 
-- No technical experience is required for the guided session. Codex handles setup and the source repair. You use the browser, read clues and describe what you notice.
-- On macOS, [Start Training Lab.command](Start%20Training%20Lab.command) launches the explicit educational version and opens your default browser. Keep its window open while playing. Otherwise use the setup commands below.
-- The permission flaw has been repaired in `lab/policy.py`, so protected startup is now the default. The deliberate flaw stays reachable only with `--training-vulnerable`, for the explicit educational replay. This is not yet a completed public release.
+## The one real demo
 
-![The beginner starting screen](docs/screenshots/guild-start.jpg)
+A tiny standard-library server with a genuine broken-object-level-authorization
+flaw. No dependencies, loopback only, synthetic data.
 
-- [Player briefing](docs/PLAYER-BRIEF.md)
-- [Exercise report](docs/REPORT.md)
-- [Red/blue agent round log](docs/AGENT-ROUND-LOG.md)
-- [Investigation notes](docs/INVESTIGATION-NOTES.md)
-- [Verification record](docs/VERIFICATION.md)
-- [Story specification and ending conditions (spoilers)](docs/STORY.md)
-- [Optional progressive hints](docs/HINTS.md)
-- [Sources and limits](docs/SOURCES.md)
-- [Art direction, design skill and artwork attribution](docs/ART-DIRECTION.md)
-
-## Setup for technical reviewers
-
-Python 3.9-compatible source uses the standard library, SQLite and local browser assets. The tested local runtime is Python 3.9.6. There are no application API keys, dependencies to install or external services.
-
-```sh
-python3 server.py --training-vulnerable --open-browser
-python3 -m unittest discover -s tests -v
+```bash
+python3 server.py --vulnerable    # flaw active:    GET /api/dossiers/103 → 200 (leak)
+python3 server.py                 # protected default: same request → 403
+python3 -m unittest discover -s tests
 ```
 
-The server binds to `127.0.0.1:8765`. Stop it before resetting the fixture:
+Full walkthrough in [`lab/README.md`](lab/README.md) and
+[dossier 01](dossiers/01-broken-access-control.md).
 
-```sh
-python3 server.py --reset
+## Honest account
+
+- **Who built this:** the lab and the dossiers were produced with AI agents that
+  I directed, scoped and reviewed. I am not claiming hands-on exploit-development
+  experience; I am showing threat literacy and the ability to orchestrate and
+  verify an AI red/blue team. That framing is the point, and it is true.
+- **What's proven:** only dossier 01 is a live, reproducible result. The rest are
+  analyses, labelled as such.
+- **Scope:** fictional world, synthetic data, loopback only, defensive framing. No
+  real people, companies, or systems are targeted; "Gallantir" is not a real
+  company.
+
+## References
+
+- OWASP API1: Broken Object Level Authorization —
+  <https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization/>
+- UN Convention on the Rights of the Child, Articles 15–16 (association, privacy),
+  context for the youth-rights framing —
+  <https://www.unicef.org/child-rights-convention/convention-text>
+- Python standard-library HTTP server (explicitly not for production) —
+  <https://docs.python.org/3/library/http.server.html>
+- AI red/blue research and tooling: see the "Where this is going" section of
+  [`swarm.md`](swarm.md).
+
+## Layout
+
+```
+README.md     story.md     swarm.md        LICENSE
+server.py                  ← the one real, runnable flaw
+lab/          policy.py, fixtures.json, README.md
+tests/        test_lab.py  ← 7 checks
+dossiers/     01…05        ← the red/blue threat studies
 ```
 
-Reset starts a new mission and restores invented records and an active mock feed. It preserves previous exported evidence. An ordinary restart keeps the active mission and revocation state. Runtime files live in the ignored `var/` folder; exports live in `evidence/<run-id>/`.
-
-The supplied analyst token is `analyst-demo-token`. Operator and collector credentials are separate, synthetic training passes. Codex supplies the responder code at the defence stage. The browser handles ordinary request syntax for the participant; technical reviewers can inspect the backend or run these commands.
-
-## Verification and attribution
-
-Thirteen automated checks pass: the ten baseline checks (real permission failure, authentication, role boundaries, collector acceptance and revocation, restart/reset behaviour, evidence exports, hint recording and verification freshness) plus three protected-mode checks confirming the repaired boundary blocks cross-workspace reads, preserves operator review and still returns 404 for a missing file. An end-to-end run against the protected build passes all six mission checks. Adrian's own guided walkthrough remains pending. See the agent round log for the recorded blue defence and its before/after evidence.
-
-Codex agents implement the lab and its interface. Adrian directs and performs the guided investigation. The report will distinguish the work each actually completed. Builder QA is kept separate from participant evidence. See [the agent round log](docs/AGENT-ROUND-LOG.md).
-
-The intended learning outcome is a reproducible example of reconnaissance, broken object-level authorisation, evidence handling, credential revocation and defensive retesting. The project does not claim practical phishing, malware-analysis or DDoS-testing experience.
-
-The planned AI component uses a small Codex agent team: A red scout, an independent red validator and a blue defender, coordinated with the participant. One discovery round is followed by remediation and retesting. Actual exercise agent work will be recorded with evidence; no red/blue exercise agents have run yet. The local application will not require an AI account or embedded API credentials.
-
-## Intended presentation
-
-The interface is a compact desktop client. A Discord-style archived guild channel uses an engraved watchtower crest and small fantasy portraits. CivicLens is a cold corporate record browser with table-like record rows and an actual request console. The defence view uses a black and green terminal, displaying the real session and verification results. A case-file inspector keeps evidence and notes alongside the current view. There is no simulated terminal activity.
-
-Design references are [Discord's channel layout](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord) and [terminal panes](https://learn.microsoft.com/en-us/windows/terminal/). The glyphs and portraits are local SVG drawings; no external art or remote fonts are loaded.
-
-## Publication
-
-This repository contains the local lab, synthetic fixtures, investigation evidence, the verified fix and an honest account of the work (see the [report](docs/REPORT.md)). It is published as a completed, self-contained training project. Runtime data (the local database and a run's exported evidence) is intentionally not included. The lab connects to no external service and contains no real personal data, credentials or claims about any real company.
+MIT licensed. Fictional throughout.

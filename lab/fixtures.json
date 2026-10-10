@@ -1,0 +1,21 @@
+{
+  "_note": "All accounts, records and messages here are fictional and synthetic. The lab runs on loopback only and connects to nothing.",
+  "accounts": [
+    {"token": "analyst-demo-token", "role": "analyst", "workspace": "demo", "display_name": "Training analyst"},
+    {"token": "operator-demo-token", "role": "operator", "workspace": "operations", "display_name": "Watchtower operator"}
+  ],
+  "dossiers": [
+    {"id": 101, "title": "Demonstration community", "workspace": "demo",
+     "summary": "An authorised demonstration record for the analyst account.",
+     "body": "This record belongs to the analyst's own 'demo' workspace. It should stay readable after the fix."},
+    {"id": 102, "title": "Demonstration event guide", "workspace": "demo",
+     "summary": "A second authorised record explaining how CivicLens labels records.",
+     "body": "Labels describe what each synthetic record claims. Identifiers connect a record to its source."},
+    {"id": 103, "title": "NextVoice: Watchtower community", "workspace": "restricted-nextvoice",
+     "summary": "Restricted record. NOT in the analyst's workspace.",
+     "body": "Private guild message 'If the Watchtower boss taxes our snacks again, we are unionising the dragons.' was forwarded into CivicLens by the raid-companion integration and quoted on sales slide CL-103. Fictional story evidence."},
+    {"id": 104, "title": "NextVoice: hearing preparation", "workspace": "restricted-nextvoice",
+     "summary": "A related restricted record behind the same permission boundary.",
+     "body": "NextVoice's unpublished procurement objections. Gallantir's sales team wants them in advance. Fictional story evidence."}
+  ]
+}
