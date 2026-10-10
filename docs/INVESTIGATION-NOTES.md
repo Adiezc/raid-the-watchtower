@@ -4,7 +4,6 @@ Participant session: Claude (Opus) played the guided investigation end to end on
 2026-10-10 at Adrian's request ("go through it as if you were a user and check
 everything"). This is a Claude-as-participant walkthrough, not Adrian's own
 session. Run `run-9f4b3eb9ce20`, vulnerable build, local target `127.0.0.1:8765`.
-Adrian's own participation is still separately pending in the checklist.
 
 The initial observation and hypothesis below were recorded in the browser
 notebook **before** any exploit was run and before any AI agent conclusion was

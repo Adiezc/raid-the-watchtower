@@ -2,7 +2,7 @@
 
 A fictional cybersecurity lab about defending a youth rights community from intrusive surveillance.
 
-**Status: The beginner browser lab is ready and the permission flaw has been repaired. The protected build is the default, and all 13 automated checks plus an end-to-end protected-build verification pass. Adrian's own guided investigation and the final release remain to be completed.**
+**Status: Complete. The beginner browser lab works, the permission flaw is repaired (the protected build is the default), all 13 automated checks pass, and the lab has been verified end to end through the Victory ending, including a recorded red/blue AI-agent round. See the [report](docs/REPORT.md) and [verification record](docs/VERIFICATION.md) for the full, honest account of what was done and by whom.**
 
 ## The premise
 
@@ -19,17 +19,17 @@ All organisations, people, messages, allegations and records are fictional. Disc
 ## Start here
 
 - No technical experience is required for the guided session. Codex handles setup and the source repair. You use the browser, read clues and describe what you notice.
-- On this Mac, [Start Training Lab.command](Start%20Training%20Lab.command) launches the explicit educational version and opens your default browser. Keep its window open while playing. If Codex has already started the lab, use the supplied browser link instead.
+- On macOS, [Start Training Lab.command](Start%20Training%20Lab.command) launches the explicit educational version and opens your default browser. Keep its window open while playing. Otherwise use the setup commands below.
 - The permission flaw has been repaired in `lab/policy.py`, so protected startup is now the default. The deliberate flaw stays reachable only with `--training-vulnerable`, for the explicit educational replay. This is not yet a completed public release.
 
 ![The beginner starting screen](docs/screenshots/guild-start.jpg)
 
-- [Build plan for 10 October, with a 20:00 Brussels deadline](docs/BUILD-PLAN.md)
-- [One-day plan](docs/ONE-DAY-PLAN.md)
 - [Player briefing](docs/PLAYER-BRIEF.md)
-- [Completion checklist](docs/COMPLETION-CHECKLIST.md)
+- [Exercise report](docs/REPORT.md)
+- [Red/blue agent round log](docs/AGENT-ROUND-LOG.md)
+- [Investigation notes](docs/INVESTIGATION-NOTES.md)
+- [Verification record](docs/VERIFICATION.md)
 - [Story specification and ending conditions (spoilers)](docs/STORY.md)
-- [Continuation notes](docs/HANDOFF.md)
 - [Optional progressive hints](docs/HINTS.md)
 - [Sources and limits](docs/SOURCES.md)
 - [Art direction, design skill and artwork attribution](docs/ART-DIRECTION.md)
@@ -71,4 +71,4 @@ Design references are [Discord's channel layout](https://support.discord.com/hc/
 
 ## Publication
 
-The planned final repository will contain a local lab, synthetic fixtures, investigation evidence, verified fixes and an honest account of the participant's work. The agreed target is to finish the local exercise, publish an approved v1.0 GitHub release and archive the repository by 20:00 Brussels time on 10 October 2026. Public release and archival have not happened. The intended repository name is `raid-the-watchtower`.
+This repository contains the local lab, synthetic fixtures, investigation evidence, the verified fix and an honest account of the work (see the [report](docs/REPORT.md)). It is published as a completed, self-contained training project. Runtime data (the local database and a run's exported evidence) is intentionally not included. The lab connects to no external service and contains no real personal data, credentials or claims about any real company.
