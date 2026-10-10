@@ -1,11 +1,14 @@
 {
   "premise": "NextVoice, a youth rights organisation, questions public purchases of systems that profile young people's political activity. Gallantir's CivicLens sales team wants advance access to the group's unpublished objections so it can defend its sales. Some NextVoice members unwind together in an MMO guild. All people, organisations and records in this lab are fictional.",
   "messages": [
-    {"id":"message-welcome","channel":"raid-night","author":"Mira","text":"Watchtower raid in twenty minutes. Bring snacks, patience and your least embarrassing mount.","time":"19:10"},
+    {"id":"message-welcome","channel":"raid-night","author":"Mira","text":"Watchtower raid in twenty minutes. Bring snacks, patience and your least embarrassing mount. After a week of NextVoice campaign work, we have earned a night off.","time":"19:10"},
+    {"id":"message-campaign","channel":"raid-night","author":"Sol","text":"Agreed. Tomorrow we tell the city's buyers why they shouldn't purchase Gallantir's CivicLens. It profiles young people who take part in politics.","time":"19:11"},
     {"id":"message-raid-joke","channel":"raid-night","author":"Rowan","text":"If the Watchtower boss taxes our snacks again, we are unionising the dragons.","time":"19:12"},
     {"id":"message-reply","channel":"raid-night","author":"Sol","text":"The dragons demand longer breaks between wipes. Fair enough.","time":"19:13"},
-    {"id":"message-slide","channel":"raid-night","author":"Mira","text":"A prospective customer sent NextVoice this Gallantir slide. That is Rowan's private joke. How did it leave our guild? We present our procurement objections tomorrow.","time":"19:16"}
+    {"id":"message-slide","channel":"raid-night","author":"Mira","text":"Bad news. A buyer forwarded us a Gallantir sales slide. It quotes Rowan's dragon joke from this channel as a \"risk indicator\". This chat is private. How did they get it?","time":"19:16"},
+    {"id":"message-ask","channel":"raid-night","author":"Rowan","text":"If they can read our guild chat, they might have our objections for tomorrow too. Can someone check the slide and find out how our words reached CivicLens?","time":"19:17"}
   ],
+
   "slide": {"title":"CivicLens community risk insight","quote":"If the Watchtower boss taxes our snacks again, we are unionising the dragons.","source_ref":"CL-103","claim":"Internal slide describes playful community language as a possible organising indicator. The quote is the opening clue, not proof of the complete route."},
   "glossary": [
     {"term":"Request","meaning":"A question your browser sends to this local application, such as asking to see a record."},
