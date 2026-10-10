@@ -20,7 +20,9 @@ from lab.storage import ROOT, Store
 from server import ANALYST_TOKEN, COLLECTOR_TOKEN, OPERATOR_TOKEN, LabServer
 
 
-class BaselineHTTPTests(unittest.TestCase):
+class LabHarness(unittest.TestCase):
+    TRAINING_VULNERABLE = True
+
     def setUp(self):
         self.temp = tempfile.TemporaryDirectory()
         self.db = Path(self.temp.name) / 'lab.sqlite3'
@@ -29,7 +31,7 @@ class BaselineHTTPTests(unittest.TestCase):
         self.start()
 
     def start(self):
-        self.server = LabServer(('127.0.0.1', 0), self.store, True)
+        self.server = LabServer(('127.0.0.1', 0), self.store, self.TRAINING_VULNERABLE)
         self.thread = threading.Thread(target=self.server.serve_forever, daemon=True)
         self.thread.start()
         self.base = 'http://127.0.0.1:%d' % self.server.server_port
@@ -57,6 +59,12 @@ class BaselineHTTPTests(unittest.TestCase):
                 return response.status, json.loads(raw) if 'application/json' in response.headers['Content-Type'] else raw
         except HTTPError as error:
             return error.code, json.loads(error.read())
+
+
+class BaselineHTTPTests(LabHarness):
+    """Assert the deliberately vulnerable baseline behaves as the flaw requires."""
+
+    TRAINING_VULNERABLE = True
 
     def test_session_and_authentication(self):
         status, session = self.request('GET', '/api/session')
@@ -188,10 +196,32 @@ class BaselineHTTPTests(unittest.TestCase):
         self.assertEqual(self.request('GET', '/api/session', extra_headers={'Host': 'example.com'})[0], 400)
         self.assertEqual(self.request('POST', '/api/notes', ANALYST_TOKEN, {}, {'Origin': 'https://example.com'})[0], 403)
 
-    def test_baseline_default_startup_refuses_without_flag(self):
-        result = subprocess.run([sys.executable, str(ROOT / 'server.py'), '--db', str(self.db)], capture_output=True, text=True, timeout=5)
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn('requires --training-vulnerable', result.stderr)
+    def test_default_startup_serves_protected_build(self):
+        import socket
+        import time
+        sock = socket.socket()
+        sock.bind(('127.0.0.1', 0))
+        port = sock.getsockname()[1]
+        sock.close()
+        proc = subprocess.Popen(
+            [sys.executable, str(ROOT / 'server.py'), '--db', str(self.db), '--port', str(port)],
+            stdout=subprocess.PIPE, stderr=subprocess.PIPE, text=True)
+        try:
+            session = None
+            for _ in range(40):
+                try:
+                    request = Request('http://127.0.0.1:%d/api/session' % port, headers={'Authorization': 'Bearer ' + ANALYST_TOKEN})
+                    with urlopen(request, timeout=1) as response:
+                        session = json.loads(response.read())
+                    break
+                except Exception:
+                    time.sleep(0.1)
+            self.assertIsNotNone(session, 'protected server did not start without the training flag')
+            self.assertEqual(session['mode'], 'protected')
+            self.assertEqual(session['build_stage'], 'defended')
+        finally:
+            proc.terminate()
+            proc.wait(timeout=5)
 
 
 class OutcomeClassificationTests(unittest.TestCase):
@@ -222,3 +252,33 @@ class OutcomeClassificationTests(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class ProtectedHTTPTests(LabHarness):
+    """Replay the same requests against the repaired, protected build."""
+
+    TRAINING_VULNERABLE = False
+
+    def test_protected_boundary_blocks_cross_workspace(self):
+        status, session = self.request('GET', '/api/session', ANALYST_TOKEN)
+        self.assertEqual(status, 200)
+        self.assertEqual(session['mode'], 'protected')
+        # The analyst keeps its own demo workspace files.
+        for dossier_id in (101, 102):
+            status, response = self.request('GET', '/api/dossiers/%d' % dossier_id, ANALYST_TOKEN)
+            self.assertEqual(status, 200)
+            self.assertEqual(response['dossier']['id'], dossier_id)
+        # Restricted files in other workspaces are now refused.
+        for dossier_id in (103, 104, 105, 106):
+            self.assertEqual(self.request('GET', '/api/dossiers/%d' % dossier_id, ANALYST_TOKEN)[0], 403)
+        # The listing exposes only the analyst's own workspace.
+        status, listing = self.request('GET', '/api/dossiers', ANALYST_TOKEN)
+        self.assertEqual(status, 200)
+        self.assertEqual({item['id'] for item in listing['items']}, {101, 102})
+
+    def test_operator_still_reviews_every_workspace(self):
+        for dossier_id in (101, 103, 104, 105, 106):
+            self.assertEqual(self.request('GET', '/api/dossiers/%d' % dossier_id, OPERATOR_TOKEN)[0], 200)
+
+    def test_missing_file_still_404_not_403(self):
+        self.assertEqual(self.request('GET', '/api/dossiers/999', ANALYST_TOKEN)[0], 404)

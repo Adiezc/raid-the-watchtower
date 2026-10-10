@@ -194,7 +194,7 @@ class Handler(BaseHTTPRequestHandler):
             self.wfile.write(encoded)
             return
         if method == 'GET' and path == '/api/session':
-            self.answer(200, {'mode': self.server.mode, 'build_stage': 'baseline' if not policy.PROTECTED_IMPLEMENTED else 'defended',
+            self.answer(200, {'mode': self.server.mode, 'build_stage': 'defended' if (policy.PROTECTED_IMPLEMENTED and not self.server.training_vulnerable) else 'baseline',
                               'run_id': self.server.store.get('run_id'), 'analyst': {'token': ANALYST_TOKEN,
                               'display_name': 'Training analyst', 'allowed_dossier_ids': [101, 102]}})
         elif method == 'GET' and path == '/api/brief':
@@ -320,8 +320,6 @@ def main():
     args = parser.parse_args()
     if not 0 <= args.port <= 65535:
         parser.error('Choose a valid local port number.')
-    if not args.reset and not args.training_vulnerable and not policy.PROTECTED_IMPLEMENTED:
-        parser.error('The blue defence has not been implemented yet. The baseline requires --training-vulnerable.')
     store = Store(args.db, args.evidence_dir)
     if args.reset:
         run_id = store.reset()
