@@ -20,3 +20,8 @@ The active `web/nightwatch-hall.png` was replaced using the built-in imagegen to
 Final edit prompt:
 
 > Use case: style-transfer. Edit target: the provided guild hall banner. Change the art style and environment into a low-polygon 2004 fantasy MMORPG dungeon scene with the chunky hand-painted look of World of Warcraft Classic, inspired by Molten Core and Blackrock Depths. Original NextVoice Nightwatch guild outpost inside a volcanic dwarven fortress: massive angular dark basalt blocks, squared carved doorway, exaggerated broad stone steps, heavy riveted iron braces, hanging chunky bronze lantern and small worn dark banners with the existing abstract lantern emblem. A narrow molten lava channel lights the right side, cavern and distant fortress arches instead of the outdoor gothic city. Clearly visible flat geometry, simple stylized hand-painted diffuse textures, broad shadow shapes, deliberately limited surface detail, warm ochre and ember lighting with muted slate stone. Looks like an actual old game environment screenshot, not realistic concept art or modern cinematic rendering. Preserve the wide landscape composition and central-left guild doorway focal point suitable for a shallow sidebar crop. No people, text, UI, logos or watermarks. Avoid photorealism, high-poly geometry, tiny realistic weathering, ray tracing, glossy surfaces and dramatic postprocessing. Save the output as a local file.
+
+
+## Reading density
+
+One archived message is shown at a time. The case file opens separately, the checklist is hidden and record responses replace tools while they are read. Notes and defence details are introduced on demand. The opening reading size is 18px on desktop and 17px on narrow screens.

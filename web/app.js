@@ -3,7 +3,7 @@
 (() => {
   const $ = (selector) => document.querySelector(selector);
   const $$ = (selector) => [...document.querySelectorAll(selector)];
-  const state = { session: null, brief: null, mission: null, records: [], analystToken: null, responderToken: null, response: null, collector: null, dirty: false, hintLevel: 0, ready: false, currentView: "guild", storySeen: false, requestBusy: false, initialised: false };
+  const state = { session: null, brief: null, mission: null, records: [], analystToken: null, responderToken: null, response: null, collector: null, dirty: false, hintLevel: 0, ready: false, currentView: "guild", storySeen: false, requestBusy: false, initialised: false, guildIndex: 0, notebookOpen: false };
   let toastTimeout;
 
   const make = (tag, text, className) => {
@@ -145,9 +145,25 @@
     $$(".view-panel").forEach((panel) => { panel.hidden = panel.id !== `panel-${name}`; });
     if (name !== "guild") state.storySeen = true;
     if (setHash && location.hash !== `#${name}`) history.replaceState(null, "", `#${name}`);
+    state.notebookOpen = false;
     renderProgress();
     renderGuidance();
     if (focus) $("#main-content").focus({ preventScroll: true });
+  }
+  function showCasefile(open) {
+    state.notebookOpen = open;
+    renderGuidance();
+    if (open && !$("#notes-form").hidden) $("#observation").focus();
+  }
+  function renderReading() {
+    const messages = $$(".guild-message");
+    state.guildIndex = Math.min(state.guildIndex, Math.max(0, messages.length - 1));
+    messages.forEach((message, index) => { message.hidden = index !== state.guildIndex; });
+    $("#reading-position").textContent = `${state.guildIndex + 1} of ${messages.length}`;
+    $("#previous-message").disabled = state.guildIndex === 0;
+    const last = state.guildIndex === messages.length - 1;
+    $("#next-message").hidden = last;
+    $(".guild-next").hidden = !last;
   }
   function renderGuidance() {
     const evidence = state.mission?.evidence || [];
@@ -156,8 +172,14 @@
     const noted = Boolean(notes.observation?.trim() && notes.hypothesis?.trim());
     const found = evidence.some(item => item.kind === "restricted-dossier");
     const advanced = noted || found || Boolean(state.response);
+    $("#casefile").hidden = !state.notebookOpen;
+    $(".main-panels").hidden = state.notebookOpen;
+    $("#toggle-casefile").setAttribute("aria-expanded", String(state.notebookOpen));
     $("#record-investigation").hidden = !advanced;
-    $("#notes-form").hidden = !(state.dirty || ((clue || noted || found) && state.currentView !== "guild"));
+    $(".slide-card").hidden = advanced;
+    $(".civic-section-heading").hidden = advanced;
+    $("#first-thought").hidden = advanced;
+    $("#notes-form").hidden = !(state.dirty || clue || noted || found);
     $("#evidence-drawer").hidden = !evidence.length;
     $("#verification-panel").hidden = !state.mission?.verification;
     $("[data-focus-notebook]").hidden = !clue;
@@ -212,7 +234,8 @@
     intro.append(vocabulary);
     const divider = make("div", null, "message-divider");
     divider.append(make("span", "RAID NIGHT / ARCHIVED MESSAGES"));
-    replace($("#message-list"), [intro, divider, ...messages]);
+    replace($("#message-list"), [...messages, intro]);
+    renderReading();
     $("#slide-title").textContent = brief.slide?.title || "CivicLens presentation";
     $("#slide-quote").textContent = brief.slide?.quote ? `“${brief.slide.quote}”` : "No presentation quote was supplied.";
     $("#slide-source").textContent = brief.slide?.source_ref || "Reference not supplied";
@@ -384,7 +407,13 @@
       $("#open-record").textContent = "Open record →";
     }
   }
+  function focusResponse(open) {
+    $("#record-controls").hidden = open;
+    $("#back-to-records").hidden = !open;
+    if (!open) $("#record-response").hidden = true;
+  }
   function renderResponse(reference, result) {
+    focusResponse(true);
     const panel = $("#record-response");
     const permitted = (state.session?.analyst?.allowed_dossier_ids || []).includes(reference);
     const dossier = result.data?.dossier;
@@ -417,10 +446,13 @@
       for (const [label, value] of [["Reference", `CL-${dossier.id}`], ["Information group (workspace)", dossier.workspace], ["About", dossier.subject]]) {
         if (value) { const field = make("div"); field.append(make("strong", label), make("span", value)); fields.append(field); }
       }
-      children.push(fields);
+      const labels = make("details", null, "record-labels");
+      labels.append(make("summary", "Record labels"), fields);
+      children.push(labels);
       for (const record of dossier.records || []) {
-        const entry = make("div", null, "record-entry");
-        entry.append(make("strong", record.label), make("p", record.text));
+        const entry = make("details", null, "record-entry");
+        entry.append(make("summary", record.label), make("p", record.text));
+        if (children.length === 2) entry.open = true;
         children.push(entry);
       }
     }
@@ -473,9 +505,17 @@
     $("#beginner-help").hidden = !open;
     $("#show-help").setAttribute("aria-expanded", String(open));
   });
-  $("#focus-notebook").addEventListener("click", () => { $("#notes-form").hidden = false; $("#observation").focus(); });
-  $$('[data-focus-notebook]').forEach((button) => button.addEventListener("click", () => { $("#notes-form").hidden = false; $("#observation").focus(); }));
-  $("#save-clue").addEventListener("click", () => saveEvidence({ kind: "clue" }, $("#save-clue")));
+  $("#focus-notebook").addEventListener("click", () => { showCasefile(true); });
+  $$('[data-focus-notebook]').forEach((button) => button.addEventListener("click", () => { showCasefile(true); }));
+  $("#toggle-casefile").addEventListener("click", () => showCasefile(!state.notebookOpen));
+  $("#close-casefile").addEventListener("click", () => showCasefile(false));
+  $("#next-message").addEventListener("click", () => { state.guildIndex += 1; renderReading(); });
+  $("#previous-message").addEventListener("click", () => { state.guildIndex -= 1; renderReading(); });
+  $("#save-clue").addEventListener("click", async () => {
+    await saveEvidence({ kind: "clue" }, $("#save-clue"));
+    if ((state.mission?.evidence || []).some(item => item.kind === "clue")) showCasefile(true);
+  });
+  $("#back-to-records").addEventListener("click", () => focusResponse(false));
   $("#record-form").addEventListener("submit", (event) => { event.preventDefault(); openRecord(Number($("#record-reference").value)); });
   $("#save-record").addEventListener("click", () => { if (state.response?.data?.request_id) saveEvidence({ request_id: state.response.data.request_id }, $("#save-record")); });
   ["#observation", "#hypothesis"].forEach((selector) => $(selector).addEventListener("input", () => {
@@ -497,6 +537,7 @@
       // Keep any edits made while the save request was running.
       state.dirty = $("#observation").value.trim() !== submitted.observation || $("#hypothesis").value.trim() !== submitted.hypothesis;
       await refreshMission();
+      if (!state.dirty) { showCasefile(false); notify("Notes saved. Continue with the record tools."); }
       feedback("#notes-feedback", state.dirty ? "Your submitted notes were saved. The newer changes still need saving." : "Your notes are saved. You can discuss this evidence with Codex.", "success");
     } catch (error) { feedback("#notes-feedback", `Notes were not confirmed saved. ${error.message}`, "error"); }
     finally { button.disabled = !state.ready; }

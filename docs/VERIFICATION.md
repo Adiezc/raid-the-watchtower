@@ -60,3 +60,10 @@ Not performed. No published release or archived repository is claimed.
 ## Classic dungeon art revision
 
 The active hall asset was edited with imagegen to match the user's requested low-poly WoW Classic inspiration. Guild frames, bronze button fittings and angular character armour were updated. The live guild screen was visually inspected at desktop and 390px mobile sizes; the image loaded and document width matched the mobile viewport. JavaScript syntax and diff whitespace checks passed. This presentation-only revision did not change the server policy or participant data.
+
+
+## Focused reading revision
+
+The opening view now shows exactly one archived message, with previous/next controls and the slide action appearing on the final message. The visible checklist and persistent notebook were removed. A separate builder run `var/reading-qa.sqlite3` verified message progression, the slide action, clue save opening the dedicated notes screen, notes save returning to record tools and an actual permitted response replacing those tools. Record labels, additional record text and defence instructions are expandable.
+
+Desktop and mobile screens were visually inspected. A mobile grid regression was corrected; the final 390px check measured a 358px main reading area and a 390px document, with one visible message. JavaScript syntax and whitespace checks passed. The participant run was not reset or used for builder evidence.
