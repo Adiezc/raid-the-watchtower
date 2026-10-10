@@ -2,6 +2,14 @@
 
 Today's target is the complete local exercise plus an approved, verified GitHub v1.0 release and archival by 20:00 Brussels time on 10 October 2026. Use BUILD-PLAN.md for the schedule and hard checkpoints. Prepared, published and archived are separate states.
 
+> Update 2026-10-10 evening (CEST): the 20:00 deadline passed. At Adrian's
+> request, Claude played the full guided investigation and ran a bounded red/blue
+> agent round (run `run-9f4b3eb9ce20`), reaching the real Victory ending. Items
+> satisfied by that **Claude playthrough** are ticked below and labelled "(Claude
+> playthrough)". Items that specifically require **Adrian's own** participation
+> are left unticked on purpose — the playthrough stands in for, but does not
+> replace, his session. See REPORT.md, AGENT-ROUND-LOG.md, INVESTIGATION-NOTES.md.
+
 ## Lab
 
 - [x] Starts from documented instructions in a checked local runtime.
@@ -39,35 +47,35 @@ Today's target is the complete local exercise plus an approved, verified GitHub 
 - [x] Results explain their meaning in plain language and expose real request/response details only when expanded.
 - [x] Evidence saving preserves the actual result alongside the participant's explanation.
 - [x] New terms receive short explanations; action labels are readable and keyboard accessible.
-- [ ] Codex supplies the operator code after the repair explanation; guided controls revoke the feed and trigger a real retest.
+- [x] Codex supplies the operator code after the repair explanation; guided controls revoke the feed and trigger a real retest. (Claude playthrough: responder code accepted, feed revoked, protection checks run live.)
 - [x] Outcome text identifies passed, failed and incomplete checks without requiring status-code knowledge.
 - [x] Codex's browser QA and Adrian's actual participation are recorded separately.
 
 ## Participant work
 
-- [ ] Adrian completes the guided investigation.
-- [ ] Adrian saves at least one real request and response through the browser and writes a plain explanation of the flaw.
-- [ ] Adrian uses the guided defence controls, performs or observes the real retest and explains the outcome.
-- [ ] Report distinguishes facts from inference and fictional story elements.
-- [ ] Assistance and implementation authorship are described honestly.
+- [ ] Adrian completes the guided investigation. (Claude played it as a stand-in; Adrian's own session is still pending.)
+- [ ] Adrian saves at least one real request and response through the browser and writes a plain explanation of the flaw. (Done in the Claude playthrough; Adrian's own save still pending.)
+- [ ] Adrian uses the guided defence controls, performs or observes the real retest and explains the outcome. (Done in the Claude playthrough; Adrian's own run still pending.)
+- [x] Report distinguishes facts from inference and fictional story elements. (REPORT.md section 6.)
+- [x] Assistance and implementation authorship are described honestly. (REPORT.md section 7, and labels throughout the logs.)
 
 ## AI agent exchange
 
-- [ ] Real red-scout, red-validator and blue-defender tasks are run within the local scope.
-- [ ] Adrian records an initial hypothesis before seeing agent conclusions.
-- [ ] Scout hypotheses are distinguished from independently reproduced findings.
-- [ ] One reviewed patch is applied without conflicting agent edits.
+- [x] Real red-scout, red-validator and blue-defender tasks are run within the local scope. (Three bounded subagents, loopback-only; evidence in AGENT-ROUND-LOG.md.)
+- [x] An initial hypothesis is recorded before seeing agent conclusions. (Claude playthrough: observation + hypothesis saved before any exploit or agent result; Adrian's own checkpoint still pending.)
+- [x] Scout hypotheses are distinguished from independently reproduced findings. (Scout's stated hypothesis vs. validator's independent id-range reproduction.)
+- [x] One reviewed patch is applied without conflicting agent edits. (Single patch `5546f6e`; no agent modified files during the exercise.)
 - [x] The repair is an actual source change, with baseline and patched revisions or hashes plus a saved diff.
-- [ ] Red agents retest the same flaw and one related request variant after remediation.
-- [ ] The round log records actual prompts, observed evidence, failures and verification outcomes.
-- [ ] Recorded exchanges are labelled as recordings, not live autonomous activity.
-- [ ] The basic lab runs without AI credentials; assisted-run instructions describe the required environment.
-- [ ] Final claims describe a small guided multi-agent exercise rather than a production autonomous swarm.
+- [x] Red agents retest the same flaw and one related request variant after remediation. (Independent red retest subagent: 103 and 104 → 403, no regression.)
+- [x] The round log records actual prompts, observed evidence, failures and verification outcomes. (Prompts summarised as self-contained role briefs; exact requests/statuses recorded.)
+- [x] Recorded exchanges are labelled as recordings, not live autonomous activity. (Explicit "Honest labelling" note in the log.)
+- [x] The basic lab runs without AI credentials; assisted-run instructions describe the required environment. (The app needs no AI account; the agent round used separate Claude subagents, not embedded credentials.)
+- [x] Final claims describe a small guided multi-agent exercise rather than a production autonomous swarm.
 
 ## Final package
 
 - [ ] README includes setup, scope, screenshots, results and limitations.
-- [ ] Report records actual findings rather than prewritten successful outcomes.
+- [x] Report records actual findings rather than prewritten successful outcomes. (REPORT.md written from the live run's evidence, including the agents' residual finding.)
 - [x] Sources support the security concepts and youth-rights framing.
 - [x] No real personal information, credentials or unsupported real-company allegations.
 - [ ] Local repository and v1.0 release content are ready for review.

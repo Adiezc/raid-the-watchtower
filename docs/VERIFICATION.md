@@ -51,7 +51,37 @@ A separate `var/design-qa.sqlite3` run at port 8766 verified the initial convers
 
 ## Participant and defensive verification
 
-Not started. The actual source patch, agent requests, participant observations, containment and protected retests will be added after they occur.
+Executed 2026-10-10 evening (CEST) as a Claude-run playthrough at Adrian's
+request ("go through it as if you were a user and check everything"). This is a
+recorded Claude exercise, not Adrian's own participation. Run `run-9f4b3eb9ce20`,
+local target `127.0.0.1:8765`. Full evidence in
+[AGENT-ROUND-LOG.md](AGENT-ROUND-LOG.md) and
+[INVESTIGATION-NOTES.md](INVESTIGATION-NOTES.md).
+
+- Participant checkpoint saved before any exploit and before any agent conclusion:
+  observation and hypothesis recorded in the browser notebook.
+- Investigation (vulnerable build): analyst list returned only CL-101/102;
+  `GET /api/dossiers/103` returned HTTP 200 and leaked the restricted
+  `restricted-nextvoice` record, reproduced both by API and through the browser's
+  numbered record field. The response was saved as `restricted-dossier` evidence
+  and the opening clue as `clue` evidence.
+- Red/blue agent round: two independent red subagents converged on the BOLA/IDOR
+  finding (ids 103–106 across three restricted workspaces); a blue subagent
+  reviewed the repair and judged it sound and complete, noting one minor residual
+  (the 403-vs-404 existence oracle).
+- Remediation retest (protected build, same database): restricted 103–106 now
+  403, own records 101/102 still 200, missing 999 still 404, operator review of
+  103 still 200. The clue and restricted-dossier evidence survived the restart.
+- Guided containment: one fictional event accepted while active (count 1→2); feed
+  revoked (the 2 events preserved); a post-revoke event refused.
+- Real server verification (`/api/mission/verify`, protected mode): all six checks
+  pass — original 403, variant 403, authorised 200, filtered-list {101,102},
+  collector (count 2→2, inactive, new POST rejected), source-fresh. Server outcome:
+  **victory — Victory With Loose Ends**.
+
+Still separately pending: Adrian's own guided walkthrough (this run stands in for
+it but does not replace it), and the publication/release/archival steps, which
+remain subject to his explicit approval against concrete content.
 
 ## Final reproduction and publication
 
