@@ -44,6 +44,24 @@ finding until someone reproduces it without seeing the first agent's answer.
 5. **I verify** the outcome against actual results and write it up honestly,
    including disagreements and anything the agents got wrong.
 
+## Run the swarm yourself
+
+The round above is not just described, it is a runnable script. [`swarm/`](swarm/)
+holds the orchestrator ([`run_exercise.py`](swarm/run_exercise.py)), the role
+prompts ([`roles.py`](swarm/roles.py)) and captured [`transcripts/`](swarm/transcripts/).
+The orchestrator starts the lab, gives each agent one scope-locked read-only HTTP
+tool, runs the loop and writes the transcripts.
+
+```bash
+python3 swarm/run_exercise.py --self-check   # no API key: proves the plumbing and the scope guard
+python3 swarm/run_exercise.py                # full run (needs the anthropic SDK and a key)
+```
+
+The scope is enforced in two places at once: the role prompt tells each agent the
+boundary, and the `http_get` tool enforces it in code (only GET, only the lab's
+own `/api/` routes). A model can be talked into things; the tool cannot. See
+[`swarm/README.md`](swarm/README.md).
+
 ## What is real versus illustrative
 
 Being honest about this is the point, not a disclaimer.

@@ -19,7 +19,8 @@ longer only "write a payload." It is **directing a team of specialised agents,
 keeping them in scope and verifying what they produce.** This project is a small,
 honest demonstration of exactly that. A red scout and validator find and confirm.
 A blue defender fixes and proves it. A human coordinator sets scope and calls
-what is real. See [`swarm.md`](swarm.md).
+what is real. The swarm is a runnable script, not just a description (see
+[`swarm/`](swarm/) and [`swarm.md`](swarm.md)).
 
 ## The threats (dossiers)
 
@@ -85,6 +86,7 @@ Full walkthrough in [`lab/README.md`](lab/README.md) and
 README.md     story.md     swarm.md        LICENSE
 server.py                  the one real, runnable flaw
 lab/          policy.py, fixtures.json, README.md
+swarm/        run_exercise.py, roles.py, transcripts/   the runnable agent swarm
 tests/        test_lab.py  7 checks
 dossiers/     01 to 05     the red/blue threat studies
 ```
