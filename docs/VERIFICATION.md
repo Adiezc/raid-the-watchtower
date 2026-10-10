@@ -35,6 +35,14 @@ An independent read-only review reran all ten tests successfully in 5.283 second
 
 The fresh participant run is `run-2f9b7fa90656`, served at `http://127.0.0.1:8765/`. Its initial notebook and assistance list were empty and no verification had run when it was handed to Adrian. Builder QA was stopped. The starting screen is saved in `docs/screenshots/guild-start.jpg`.
 
+## Interface redesign
+
+Adrian requested a substantial visual redesign before starting his investigation. The landing-page structure was replaced with a guild client, corporate record console and defence terminal. Read-only review confirmed balanced HTML, unique IDs, complete accessibility references and preserved JavaScript selector contracts. Notes now precede clue testing in the mission log. Tab navigation supports Up/Down as well as Left/Right and adapts its accessibility orientation to the responsive layout.
+
+The coordinator tested the redesign in a separate `var/ui-review.sqlite3` run at port 8766. Builder-labelled notes and the clue saved through actual controls; a permitted record opened with a visible, truthful `GET /api/dossiers/101 → HTTP 200` line, and its response saved. Reload retained the notes and two evidence items. The real responder controls ran all six checks and kept this unrepaired builder mission incomplete. These checks are not participant or red/blue results.
+
+All three views were inspected at a 390 by 844 viewport without horizontal overflow. The desktop recheck also measured document width equal to the 1280px viewport. Message and note-input fonts measured 14px. Keyboard navigation selected the correct view and browser warning/error logs were empty. Temporary viewport overrides were reset. The refreshed participant client kept the original empty run and returned to Guild commons. Desktop screenshots of all three views and a full starting view were saved and inspected.
+
 ## Participant and defensive verification
 
 Not started. The actual source patch, agent requests, participant observations, containment and protected retests will be added after they occur.

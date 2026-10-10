@@ -13,6 +13,24 @@
     return element;
   };
   const replace = (node, children) => node.replaceChildren(...children);
+  const guildAvatar = (author) => {
+    const avatar = make("div", null, "avatar");
+    avatar.setAttribute("aria-hidden", "true");
+    const portraits = {
+      Mira: [["#263039", "M0 0h40v40H0Z"], ["#65544d", "M3 40V27l10-7h14l10 7v13Z"], ["#b5b0a2", "M11 20V12l9-6 9 6v8l-4 10H15Z"], ["#343c42", "M13 16h14v7l-7 5-7-5Zm6-8h2v21h-2Z"], ["#decbb2", "M14 17h4v2h-4Zm8 0h4v2h-4Z"]],
+      Rowan: [["#1e2b29", "M0 0h40v40H0Z"], ["#51594a", "M4 40V25l7-17 9-5 9 5 7 17v15Z"], ["#17201e", "m12 25 1-12 7-6 7 6 1 12-8 9Z"], ["#a99e7a", "M14 18h4v2h-4Zm8 0h4v2h-4Z"], ["#6b7158", "m8 29 12 8 12-8-4 11H12Z"]],
+      Sol: [["#302728", "M0 0h40v40H0Z"], ["#7e5a43", "M4 40V28l6-7V10l10-5 10 5v11l6 7v12Z"], ["#2c2526", "M13 12h14v13l-7 7-7-7Z"], ["#c4a268", "M14 17h4v2h-4Zm8 0h4v2h-4ZM19 8h2v5h-2Z"], ["#ae8056", "m9 30 11 5 11-5-5 10H14Z"]]
+    };
+    if (!portraits[author]) { avatar.textContent = (author || "?").slice(0, 1); return avatar; }
+    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+    svg.setAttribute("viewBox", "0 0 40 40");
+    for (const [fill, d] of portraits[author]) {
+      const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      path.setAttribute("fill", fill); path.setAttribute("d", d); svg.append(path);
+    }
+    avatar.append(svg);
+    return avatar;
+  };
   const plainError = (data, fallback) => typeof data?.error === "string" ? data.error : (data?.error?.message || data?.message || fallback);
   const evidenceLabel = (saved) => {
     if (saved.kind === "clue") return "Guild message and matching slide";
@@ -89,6 +107,7 @@
       label = training ? "Training mode · flaw enabled" : "Protected mode · run checks";
     }
     $$('[data-mode]').forEach((badge) => { badge.textContent = label; });
+    $("#terminal-run").textContent = state.session?.run_id || "Not connected";
   }
   function setConnectionError(message) {
     const banner = $("#connection-banner");
@@ -106,6 +125,8 @@
   function selectView(name, { focus = false, setHash = true } = {}) {
     if (!["guild", "civiclens", "watchtower"].includes(name)) name = "guild";
     state.currentView = name;
+    document.body.dataset.view = name;
+    $(".view-tabs").setAttribute("aria-orientation", window.matchMedia("(max-width: 760px)").matches ? "horizontal" : "vertical");
     $$("[data-tab]").forEach((tab) => {
       const active = tab.dataset.tab === name;
       tab.setAttribute("aria-selected", String(active));
@@ -122,8 +143,8 @@
     const notes = latestNotes();
     const stages = {
       story: state.storySeen || evidence.some((item) => item.kind === "clue"),
-      records: evidence.some((item) => item.kind !== "clue"),
       notes: Boolean(notes.observation?.trim() && notes.hypothesis?.trim()),
+      records: evidence.some((item) => item.kind === "restricted-dossier"),
       defence: state.mission?.outcome?.key === "victory"
     };
     const next = Object.keys(stages).find((key) => !stages[key]);
@@ -141,8 +162,7 @@
     const brief = state.brief;
     const messages = (brief.messages || []).map((message) => {
       const item = make("article", null, "guild-message");
-      const avatar = make("div", (message.author || "?").slice(0, 1), "avatar");
-      avatar.setAttribute("aria-hidden", "true");
+      const avatar = guildAvatar(message.author);
       const content = make("div");
       const author = make("div", null, "message-author");
       author.append(make("span", message.author || "Guild member"), make("span", message.time || "", "message-time"), make("span", `# ${message.channel || "guild"}`, "message-channel"));
@@ -151,9 +171,13 @@
       return item;
     });
     const intro = make("div", null, "guild-story-context");
-    intro.append(make("p", "NextVoice is a fictional youth rights group. It questions public authorities buying systems that monitor young people's political activity. Some members play together in this guild. Gallantir, the company selling CivicLens, wants to anticipate their objections."));
-    intro.append(make("p", "In this story, procurement means buying these monitoring systems. A raid is a cooperative game mission; a wipe means the team loses and tries again.", "story-vocabulary"));
-    replace($("#message-list"), [intro, ...messages]);
+    intro.append(make("span", "PINNED BRIEFING", "pinned-label"), make("p", "NextVoice campaigns against monitoring young people's political activity. Guild members meet here to play. Gallantir sells the monitoring system and wants to anticipate NextVoice's objections."));
+    const vocabulary = make("details", null, "story-vocabulary");
+    vocabulary.append(make("summary", "A few words from the story"), make("p", "Procurement means buying these monitoring systems. A raid is a cooperative game mission; a wipe means the team loses and tries again."));
+    intro.append(vocabulary);
+    const divider = make("div", null, "message-divider");
+    divider.append(make("span", "RAID NIGHT / ARCHIVED MESSAGES"));
+    replace($("#message-list"), [intro, divider, ...messages]);
     $("#slide-title").textContent = brief.slide?.title || "CivicLens presentation";
     $("#slide-quote").textContent = brief.slide?.quote ? `“${brief.slide.quote}”` : "No presentation quote was supplied.";
     $("#slide-source").textContent = brief.slide?.source_ref || "Reference not supplied";
@@ -317,6 +341,7 @@
       $("#response-explanation").textContent = error.message;
       replace($("#record-content"), []); replace($("#record-request-meta"), []);
       $("#record-json").textContent = "No server response was received.";
+      $("#response-wire-log").textContent = `GET /api/dossiers/${Number(reference)} → No response received`;
     } finally {
       state.requestBusy = false;
       $("#open-record").disabled = !state.ready;
@@ -327,6 +352,7 @@
     const panel = $("#record-response");
     const permitted = (state.session?.analyst?.allowed_dossier_ids || []).includes(reference);
     const dossier = result.data?.dossier;
+    $("#response-wire-log").textContent = `${result.method} ${result.path} → HTTP ${result.status}`;
     panel.hidden = false;
     panel.className = `record-response ${result.ok ? permitted ? "" : "error" : result.status === 403 ? "denied" : "error"}`;
     $("#response-symbol").textContent = result.ok ? permitted ? "✓" : "!" : result.status === 403 ? "◇" : "!";
@@ -396,8 +422,8 @@
     tab.addEventListener("click", () => selectView(tab.dataset.tab));
     tab.addEventListener("keydown", (event) => {
       let next;
-      if (event.key === "ArrowRight") next = (index + 1) % tabs.length;
-      if (event.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
+      if (["ArrowRight", "ArrowDown"].includes(event.key)) next = (index + 1) % tabs.length;
+      if (["ArrowLeft", "ArrowUp"].includes(event.key)) next = (index - 1 + tabs.length) % tabs.length;
       if (event.key === "Home") next = 0;
       if (event.key === "End") next = tabs.length - 1;
       if (next !== undefined) { event.preventDefault(); selectView(tabs[next].dataset.tab); tabs[next].focus(); }
@@ -405,6 +431,7 @@
   });
   $$('[data-go]').forEach((button) => button.addEventListener("click", () => selectView(button.dataset.go, { focus: true })));
   window.addEventListener("hashchange", () => selectView(location.hash.slice(1), { setHash: false }));
+  window.addEventListener("resize", () => $(".view-tabs").setAttribute("aria-orientation", window.matchMedia("(max-width: 760px)").matches ? "horizontal" : "vertical"));
   $("#show-help").addEventListener("click", () => {
     const open = $("#beginner-help").hidden;
     $("#beginner-help").hidden = !open;

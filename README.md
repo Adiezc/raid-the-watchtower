@@ -64,7 +64,9 @@ The planned AI component uses a small Codex agent team: A red scout, an independ
 
 ## Intended presentation
 
-A dark fantasy watchtower silhouette anchors an Anonymous-inspired investigative terminal. Gallantir's polished dashboard contrasts with a warm guild community view. These are three views of one small application, not separate products.
+The interface is a compact desktop client. A Discord-style archived guild channel uses an engraved watchtower crest and small fantasy portraits. CivicLens is a cold corporate record browser with table-like record rows and an actual request console. The defence view uses a black and green terminal, displaying the real session and verification results. A case-file inspector keeps evidence and notes alongside the current view. There is no simulated terminal activity.
+
+Design references are [Discord's channel layout](https://support.discord.com/hc/en-us/articles/360045138571-Beginner-s-Guide-to-Discord) and [terminal panes](https://learn.microsoft.com/en-us/windows/terminal/). The glyphs and portraits are local SVG drawings; no external art or remote fonts are loaded.
 
 ## Publication
 
