@@ -69,3 +69,15 @@ Evidence, vulnerable build (`--training-vulnerable`, port 8765), analyst token:
 - Automated suite: 13 tests pass (10 baseline + 3 new protected-mode checks). Baseline flaw-present tests and protected-boundary tests both green.
 - Runtime source hash at repair time: `a28184a7f58dfb7d…`.
 - Still outstanding for the full mission: the participant's recorded first thoughts, the saved restricted-dossier evidence from the investigation, and the live collector-revocation retest with the operator.
+
+### Protected build end-to-end verification — 2026-10-10 16:53 CEST
+
+Fresh reset, default (protected) build, real HTTP flow on 127.0.0.1:8765.
+
+- Authentication: no token and bad token both rejected (HTTP 401).
+- Access boundary (analyst): own files 101, 102 -> 200; restricted 103, 104, 105, 106 -> 403; missing 999 -> 404; listing returns only [101, 102].
+- Operator review: operator GET 103 -> 200 (legitimate cross-workspace review preserved).
+- Collector: event accepted (HTTP 201) before revocation; operator revoke -> 200; event rejected (HTTP 403) after revocation; analyst cannot revoke (HTTP 403, role boundary).
+- Mission verification (operator): all six checks PASS — original, variant, authorised, filtered-list, collector, source-fresh.
+
+This confirms the repaired boundary, the role separation, the collector cut-off and source-freshness together produce the intended passing result in the protected build.
