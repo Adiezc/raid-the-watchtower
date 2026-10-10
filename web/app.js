@@ -28,6 +28,16 @@
       const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
       path.setAttribute("fill", fill); path.setAttribute("d", d); svg.append(path);
     }
+    // Broad armour planes echo early low-poly character silhouettes.
+    const facets = {
+      Mira: [["#e0ccb0", "m11 12 9-6v8l-7 2Z"], ["#5b605e", "m20 6 9 6-2 8-7-6Z"], ["#a18a65", "m3 28 10-7 4 10-11 3Z"]],
+      Rowan: [["#7d8154", "m11 8 9-5v5l-7 5-2 12-4-5Z"], ["#374b36", "m20 3 9 5 7 17-8-2-1-10-7-5Z"], ["#a49b69", "m8 29 12 8-8 3Z"]],
+      Sol: [["#b88747", "m10 10 10-5v6l-7 1v13l-3-4Z"], ["#5e4032", "m20 5 10 5v11l6 7-9 2V12l-7-1Z"], ["#d0a567", "m4 30 5 0 11 5-6 5H4Z"]]
+    };
+    for (const [fill, d] of facets[author] || []) {
+      const plane = document.createElementNS("http://www.w3.org/2000/svg", "path");
+      plane.setAttribute("fill", fill); plane.setAttribute("d", d); svg.append(plane);
+    }
     avatar.append(svg);
     return avatar;
   };

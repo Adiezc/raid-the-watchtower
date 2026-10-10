@@ -3582,3 +3582,21 @@ footer>span:last-child {
 #icon-lantern path:last-child { fill:#d4b473; stroke:none; }
 .server-rail .guild-rail-icon { width:27px; height:34px; }
 .guild-art .lantern-crest { bottom:9px; }
+/* Classic dungeon materials: squared bronze fittings and basalt framing. */
+body[data-view="guild"] .guild-panel { background:#282827; }
+body[data-view="guild"] .guild-panel .panel-header { background:#242422; border-bottom:2px solid #514738; box-shadow:inset 0 1px #74604444; }
+body[data-view="guild"] .guild-topic { background:#2b2824; border-bottom-color:#433b31; }
+body[data-view="guild"] .guild-next { border-top:2px solid #4b4033; }
+.guild-art { border-bottom:3px solid #605037; box-shadow:inset 0 0 0 2px #141410; }
+.guild-art img { opacity:1; object-position:40% 48%; image-rendering:auto; }
+.guild-art::after { background:linear-gradient(transparent 60%,#252420); }
+.sidebar-guild { background:#252420; }
+.sidebar-guild h1 { text-shadow:1px 2px #100f0c; }
+.guild-message .avatar { border-radius:3px; border:2px solid #8d744d; background:#28271f; box-shadow:inset 0 0 0 1px #181711,1px 2px #11111188; }
+.guild-message .avatar svg { border-radius:0; }
+.guild-message .avatar::after { border-radius:0; border:1px solid #c4a66a55; }
+.guild-message:nth-child(3n+2) .avatar { border-color:#827b4d; }
+.guild-message:nth-child(3n) .avatar { border-color:#a76b3e; }
+body[data-view="guild"] .button-gold { background:#695334; color:#f0ddb4; border:2px solid #ac8a4f; border-radius:2px; box-shadow:inset 1px 1px #d1ae6766,inset -1px -1px #332718; }
+body[data-view="guild"] .button-gold:hover { background:#80623a; }
+@media(max-width:760px) { .guild-art img { opacity:.65; object-position:40% 50%; } .guild-art::after { background:linear-gradient(90deg,#25242022,#252420bb); } }
