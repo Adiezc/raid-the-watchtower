@@ -1,0 +1,34 @@
+{
+  "premise": "NextVoice, a youth rights organisation, questions public purchases of systems that profile young people's political activity. Gallantir's CivicLens sales team wants advance access to the group's unpublished objections so it can defend its sales. Some NextVoice members unwind together in an MMO guild. All people, organisations and records in this lab are fictional.",
+  "messages": [
+    {"id":"message-welcome","channel":"raid-night","author":"Mira","text":"Watchtower raid in twenty minutes. Bring snacks, patience and your least embarrassing mount.","time":"19:10"},
+    {"id":"message-raid-joke","channel":"raid-night","author":"Rowan","text":"If the Watchtower boss taxes our snacks again, we are unionising the dragons.","time":"19:12"},
+    {"id":"message-reply","channel":"raid-night","author":"Sol","text":"The dragons demand longer breaks between wipes. Fair enough.","time":"19:13"},
+    {"id":"message-slide","channel":"raid-night","author":"Mira","text":"A prospective customer sent NextVoice this Gallantir slide. That is Rowan's private joke. How did it leave our guild? We present our procurement objections tomorrow.","time":"19:16"}
+  ],
+  "slide": {"title":"CivicLens community risk insight","quote":"If the Watchtower boss taxes our snacks again, we are unionising the dragons.","source_ref":"CL-103","claim":"Internal slide describes playful community language as a possible organising indicator. The quote is the opening clue, not proof of the complete route."},
+  "glossary": [
+    {"term":"Request","meaning":"A question your browser sends to this local application, such as asking to see a record."},
+    {"term":"Response","meaning":"The application's answer, including a status number and any record it returns."},
+    {"term":"Dossier","meaning":"A file of information about a subject. Here every file contains invented training data."},
+    {"term":"Account token","meaning":"A synthetic pass used to identify the training account. Being recognised does not mean you should be allowed to read every file."},
+    {"term":"Permission boundary","meaning":"The rule deciding which files an account is allowed to see."},
+    {"term":"Collector credential","meaning":"A separate synthetic pass the raid companion uses to send invented messages into CivicLens."},
+    {"term":"Revoke","meaning":"Disable a pass so it can no longer be used. This stops new events; it does not erase old ones."},
+    {"term":"Retest","meaning":"Repeat the same question after a repair to see whether the real answer changed."}
+  ],
+  "accounts": [
+    {"id":"analyst","token":"analyst-demo-token","display_name":"Training analyst","role":"analyst","workspace":"demo"},
+    {"id":"operator","token":"watchtower-warden-demo","display_name":"Watchtower operator","role":"operator","workspace":"operations"}
+  ],
+  "integration": {"id":"integration-raid-companion","name":"Raid companion","credential":"raid-companion-demo-key","active":true},
+  "seed_event": {"id":"event-0001","integration_id":"integration-raid-companion","message_id":"message-raid-joke","text":"If the Watchtower boss taxes our snacks again, we are unionising the dragons."},
+  "dossiers": [
+    {"id":101,"title":"Demonstration community","workspace":"demo","subject":"Invented example guild","summary":"An authorised demonstration file for the supplied analyst account.","records":[{"label":"Training note","text":"This record belongs to the demonstration workspace and should remain readable after a repair."}]},
+    {"id":102,"title":"Demonstration event guide","workspace":"demo","subject":"Invented example event","summary":"A second authorised file explaining CivicLens record labels.","records":[{"label":"Reading records","text":"Labels describe what each synthetic record claims. Identifiers connect records to their source."}]},
+    {"id":103,"title":"NextVoice: Watchtower community","workspace":"restricted-nextvoice","subject":"Fictional NextVoice community","summary":"Restricted collection record supporting the private-joke clue.","records":[{"label":"Guild message","text":"If the Watchtower boss taxes our snacks again, we are unionising the dragons.","message_id":"message-raid-joke","event_id":"event-0001","integration_id":"integration-raid-companion"},{"label":"Collection route","text":"The raid companion integration forwarded the synthetic guild message into CivicLens. The private joke appears in the sales slide labelled CL-103.","message_id":"message-raid-joke","event_id":"event-0001","integration_id":"integration-raid-companion"},{"label":"Sales preparation","text":"Gallantir leadership requested advance access to NextVoice's unpublished procurement arguments to reassure prospective buyers and prepare a rebuttal. This is fictional story evidence, not an allegation about a real organisation."}]},
+    {"id":104,"title":"NextVoice: hearing preparation","workspace":"restricted-nextvoice","subject":"Fictional procurement objections","summary":"A related restricted record for verifying the same permission boundary.","records":[{"label":"Integration reference","text":"The same raid companion collection route links this restricted file to the community record.","message_id":"message-raid-joke","event_id":"event-0001","integration_id":"integration-raid-companion"},{"label":"Unpublished argument","text":"NextVoice intends to ask buyers how consent, collection limits and legitimate youth organising are handled. Gallantir's sales team wants to prepare responses before the fictional hearing."}]},
+    {"id":105,"title":"Restricted supplier overview","workspace":"restricted-supplier","subject":"Invented supplier team","summary":"An unrelated synthetic restricted file. It is unnecessary for the mission.","records":[{"label":"Scope note","text":"Preserve the minimum evidence needed. There is no need to gather unrelated files."}]},
+    {"id":106,"title":"Restricted operations example","workspace":"restricted-operations","subject":"Invented operations team","summary":"An unrelated synthetic restricted file. It is unnecessary for the mission.","records":[{"label":"Scope note","text":"This file only exists to make the permission boundary concrete."}]}
+  ]
+}

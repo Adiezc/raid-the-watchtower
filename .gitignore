@@ -1,0 +1,6 @@
+var/
+__pycache__/
+*.py[cod]
+.DS_Store
+.venv/
+.local-review/
