@@ -67,3 +67,8 @@ The active hall asset was edited with imagegen to match the user's requested low
 The opening view now shows exactly one archived message, with previous/next controls and the slide action appearing on the final message. The visible checklist and persistent notebook were removed. A separate builder run `var/reading-qa.sqlite3` verified message progression, the slide action, clue save opening the dedicated notes screen, notes save returning to record tools and an actual permitted response replacing those tools. Record labels, additional record text and defence instructions are expandable.
 
 Desktop and mobile screens were visually inspected. A mobile grid regression was corrected; the final 390px check measured a 358px main reading area and a 390px document, with one visible message. JavaScript syntax and whitespace checks passed. The participant run was not reset or used for builder evidence.
+
+
+## History instead of side text
+
+The persistent sidebars and header controls were consolidated into a native History & tools dialog. Only the current message and continuation remain on the opening screen. A separate builder run verified next-message progression, position/history surviving reload, rereading an earlier message and reopening the saved company slide after notes had been saved. The mobile recheck measured a 390px document and a 350px dialog within the 390px viewport. Temporary viewport overrides were reset and the QA server stopped. HTML structure, unique IDs, JavaScript syntax and whitespace checks passed.

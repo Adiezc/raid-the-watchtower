@@ -3,7 +3,7 @@
 (() => {
   const $ = (selector) => document.querySelector(selector);
   const $$ = (selector) => [...document.querySelectorAll(selector)];
-  const state = { session: null, brief: null, mission: null, records: [], analystToken: null, responderToken: null, response: null, collector: null, dirty: false, hintLevel: 0, ready: false, currentView: "guild", storySeen: false, requestBusy: false, initialised: false, guildIndex: 0, notebookOpen: false };
+  const state = { session: null, brief: null, mission: null, records: [], analystToken: null, responderToken: null, response: null, collector: null, dirty: false, hintLevel: 0, ready: false, currentView: "guild", storySeen: false, requestBusy: false, initialised: false, guildIndex: 0, guildSeen: 0, reviewSlide: false, notebookOpen: false };
   let toastTimeout;
 
   const make = (tag, text, className) => {
@@ -135,6 +135,7 @@
   function selectView(name, { focus = false, setHash = true } = {}) {
     if (!["guild", "civiclens", "watchtower"].includes(name)) name = "guild";
     state.currentView = name;
+    state.reviewSlide = false;
     document.body.dataset.view = name;
     $(".view-tabs").setAttribute("aria-orientation", window.matchMedia("(max-width: 760px)").matches ? "horizontal" : "vertical");
     $$("[data-tab]").forEach((tab) => {
@@ -153,17 +154,32 @@
   function showCasefile(open) {
     state.notebookOpen = open;
     renderGuidance();
+    closeHistory();
     if (open && !$("#notes-form").hidden) $("#observation").focus();
   }
   function renderReading() {
     const messages = $$(".guild-message");
     state.guildIndex = Math.min(state.guildIndex, Math.max(0, messages.length - 1));
+    state.guildSeen = Math.min(Math.max(state.guildSeen, state.guildIndex), Math.max(0, messages.length - 1));
+    if (state.session?.run_id) {
+      try { sessionStorage.setItem(`watchtower-reading-${state.session.run_id}`, JSON.stringify({ index: state.guildIndex, seen: state.guildSeen })); } catch (_) { /* Reading still works without browser storage. */ }
+    }
     messages.forEach((message, index) => { message.hidden = index !== state.guildIndex; });
     $("#reading-position").textContent = `${state.guildIndex + 1} of ${messages.length}`;
     $("#previous-message").disabled = state.guildIndex === 0;
     const last = state.guildIndex === messages.length - 1;
     $("#next-message").hidden = last;
     $(".guild-next").hidden = !last;
+    const history = messages.slice(0, state.guildSeen + 1).map((message, index) => {
+      const button = make("button", null, "history-entry");
+      button.type = "button";
+      button.append(make("strong", `${message.querySelector(".message-author>span").textContent} · ${message.querySelector(".message-time").textContent}`), make("span", message.querySelector(".message-text").textContent));
+      button.addEventListener("click", () => {
+        state.guildIndex = index; selectView("guild"); renderReading(); closeHistory();
+      });
+      return button;
+    });
+    replace($("#reading-history"), history);
   }
   function renderGuidance() {
     const evidence = state.mission?.evidence || [];
@@ -175,10 +191,11 @@
     $("#casefile").hidden = !state.notebookOpen;
     $(".main-panels").hidden = state.notebookOpen;
     $("#toggle-casefile").setAttribute("aria-expanded", String(state.notebookOpen));
-    $("#record-investigation").hidden = !advanced;
-    $(".slide-card").hidden = advanced;
-    $(".civic-section-heading").hidden = advanced;
+    $("#record-investigation").hidden = !advanced || state.reviewSlide;
+    $(".slide-card").hidden = advanced && !state.reviewSlide;
+    $(".civic-section-heading").hidden = advanced && !state.reviewSlide;
     $("#first-thought").hidden = advanced;
+    $("#review-slide").hidden = !clue && !noted;
     $("#notes-form").hidden = !(state.dirty || clue || noted || found);
     $("#evidence-drawer").hidden = !evidence.length;
     $("#verification-panel").hidden = !state.mission?.verification;
@@ -361,6 +378,13 @@
       state.records = results[1].items || [];
       state.mission = results[2];
       setReady(true);
+      if (!state.initialised) {
+        try {
+          const reading = JSON.parse(sessionStorage.getItem(`watchtower-reading-${state.session.run_id}`) || "{}");
+          state.guildIndex = Number.isInteger(reading.index) && reading.index >= 0 ? reading.index : 0;
+          state.guildSeen = Number.isInteger(reading.seen) && reading.seen >= 0 ? reading.seen : 0;
+        } catch (_) { /* Start at the first message if storage is unavailable. */ }
+      }
       renderBrief(); renderAccount(); renderRecords(); renderMode(); renderMission();
       if (!state.initialised) { selectView(location.hash.slice(1) || "guild", { setHash: false }); state.initialised = true; }
     } catch (error) { renderMode(); setConnectionError(error.message); renderHints(); }
@@ -500,7 +524,15 @@
   $$('[data-go]').forEach((button) => button.addEventListener("click", () => selectView(button.dataset.go, { focus: true })));
   window.addEventListener("hashchange", () => selectView(location.hash.slice(1), { setHash: false }));
   window.addEventListener("resize", () => $(".view-tabs").setAttribute("aria-orientation", window.matchMedia("(max-width: 760px)").matches ? "horizontal" : "vertical"));
+  function closeHistory() { if ($("#history-dialog").open) $("#history-dialog").close(); }
+  $("#open-history").addEventListener("click", () => { renderReading(); $("#history-dialog").showModal(); });
+  $("#close-history").addEventListener("click", closeHistory);
+  $("#review-slide").addEventListener("click", () => {
+    selectView("civiclens"); state.reviewSlide = true; renderGuidance(); closeHistory();
+  });
+  $$("[data-tab]").forEach(tab => tab.addEventListener("click", closeHistory));
   $("#show-help").addEventListener("click", () => {
+    closeHistory();
     const open = $("#beginner-help").hidden;
     $("#beginner-help").hidden = !open;
     $("#show-help").setAttribute("aria-expanded", String(open));

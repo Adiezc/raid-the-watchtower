@@ -3658,3 +3658,46 @@ footer span:first-child,footer span:last-child { display:none; }
  .work-area,.channel-sidebar { width:100%; }
  .workspace { max-width:100%; box-sizing:border-box; }
 }
+/* All secondary navigation is behind a single history button. */
+.server-rail,.channel-sidebar,.operation-bar,#previous-message { display:none!important; }
+.desktop-layout { display:block; }
+.work-area { width:100%; }
+.desktop-titlebar { justify-content:space-between; padding:12px 24px; }
+#open-history { margin-left:auto; color:#d1bc92; font-size:14px; }
+.workspace { padding-top:64px; max-width:760px; }
+.guild-panel .panel-header { background:linear-gradient(90deg,#201a12cc,#211d19bb),url('/nightwatch-hall.png') 40% 48%/cover!important; padding:24px; }
+.channel-heading .hash { display:none; }
+.channel-heading h2 { font-family:Palatino,Georgia,serif; font-size:24px; color:#e0cc9e; }
+.guild-message { min-height:150px; margin-top:32px; }
+.guild-story-context { display:none; }
+.reading-controls { justify-content:flex-end; }
+.guild-next { padding-top:0; }
+footer { display:none; }
+#history-dialog { color:#d8d0be; background:#242423; border:1px solid #75603f; width:min(600px,calc(100vw - 40px)); max-height:80vh; overflow:auto; padding:24px; border-radius:3px; box-sizing:border-box; }
+#history-dialog::backdrop { background:#0b0c0ddd; }
+.history-heading { display:flex; justify-content:space-between; align-items:center; margin-bottom:24px; }
+.history-heading h2 { margin:0; font-size:20px; }
+#history-dialog h3 { font-size:14px; font-weight:400; color:#aaa392; }
+.history-entry { display:block; width:100%; text-align:left; background:transparent; border:0; border-top:1px solid #494237; padding:16px 0; cursor:pointer; color:#d8d0be; font:inherit; }
+.history-entry strong { display:block; font-size:13px; color:#baa77d; margin-bottom:7px; }
+.history-entry span { display:block; font-size:15px; line-height:1.6; }
+.history-entry:hover { background:#322d24; }
+.history-tools { margin-top:20px; padding-top:20px; border-top:1px solid #494237; }
+.history-tools summary { cursor:pointer; font-size:14px; }
+#history-dialog .view-tabs { display:flex; flex-wrap:wrap; margin-top:15px; padding:0; }
+#history-dialog .view-tabs button { flex:1 1 140px; }
+.history-actions { display:flex; gap:24px; margin:20px 0; }
+.history-mode { font-size:12px; color:#aaa392; }
+@media(max-width:760px) {
+ .desktop-titlebar { padding:12px 16px; }
+ .client-brand strong { font-size:11px; letter-spacing:0; }
+ #open-history { font-size:12px; }
+ .workspace { padding:32px 16px; }
+ .guild-panel .panel-header { padding:20px 18px; }
+ .channel-heading h2 { font-size:22px; }
+ .guild-message { min-height:180px; }
+}
+.screen-reader-only { position:absolute; width:1px; height:1px; padding:0; margin:-1px; overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap; border:0; }
+.history-background { margin:16px 0; font-size:14px; color:#b4ad9e; }
+.history-background summary { cursor:pointer; }
+.history-background p { line-height:1.7; }

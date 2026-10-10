@@ -25,3 +25,6 @@ Final edit prompt:
 ## Reading density
 
 One archived message is shown at a time. The case file opens separately, the checklist is hidden and record responses replace tools while they are read. Notes and defence details are introduced on demand. The opening reading size is 18px on desktop and 17px on narrow screens.
+
+
+All persistent side navigation and side text are now hidden. History & tools opens a modal with previously read messages, the saved slide and optional background, locations and case-file controls. The main screen keeps only current content and its continuation.
