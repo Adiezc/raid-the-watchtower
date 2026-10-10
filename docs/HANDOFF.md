@@ -1,0 +1,33 @@
+# Continuation notes
+
+## Current state
+
+Adrian authorised implementation with "Ok get working" and then clarified that he has no technical skills. The vulnerable baseline and beginner browser interface are built and verified. Ten isolated automated checks passed and the coordinator performed a real browser QA walkthrough in a separate database. No completed participant walkthrough, red/blue exercise, publication or archival is claimed. Development and readiness review agents did not perform the red/blue exercise.
+
+The fresh participant server is running at `http://127.0.0.1:8765/`, exec session 33492, using `var/watchtower.sqlite3` and run `run-2f9b7fa90656`. The visible browser is tab 2 in the in-app browser, marked as a deliverable. Its notebook, evidence and assistance are initially empty. Do not reset it after Adrian begins. Builder QA at port 8766 was stopped. Its isolated database and exports remain ignored under `var/`.
+
+The player journey must work for someone with essentially no cybersecurity knowledge. Codex handles setup, launch, account preparation and source repair. Adrian uses the browser to compare clues, save an observation, open his permitted dossier, investigate a numeric dossier reference with optional progressive hints, save a result with a plain explanation and use guided defence controls after Codex supplies the operator code. Developer tools, terminal commands, raw API syntax and programming are not prerequisites. Real request/response details remain expandable for evidence review.
+
+## Latest timing and finish decisions
+
+Adrian confirmed a hard stop of 20:00 Brussels time on 10 October 2026. The target includes a verified local lab, his guided walkthrough, a report and an approved GitHub publication, v1.0 release and archival. He can join a 60–90 minute investigation session. BUILD-PLAN.md schedules that session for 16:45–17:55, final reviews around 18:55 and 19:20 and a 30-minute contingency buffer.
+
+Python 3.9.6, SQLite 3.54.0 and Git 2.54.0 were checked during planning. Required standard-library modules imported successfully. Use Python 3.9-compatible code, SQLite and vanilla browser assets. Recheck the current implementation and live verification before reporting readiness. The exact GitHub owner, authentication and repository-name availability require an early read-only check.
+
+## Next action
+
+Adrian should read Guild commons, visit CivicLens, save the matching clue and record his initial observation and hypothesis in the browser notebook. Before red agents begin or Adrian revises his notes, preserve his first submission and timestamp in INVESTIGATION-NOTES.md and AGENT-ROUND-LOG.md; the database request logs retain note submissions but the notebook displays only the latest text. Do not supply an agent conclusion before this initial participant checkpoint.
+
+Then run the actual bounded red scout and independent red validator against this local lab, preserve exact request/response evidence and explain the finding to Adrian. The blue defender must propose a real reviewed authorisation source patch. Baseline backend commit is `f26be62`; the intended flaw is in `lab/policy.py`. Keep the same participant database through the protected restart. Supply the responder code during the defence stage and guide Adrian through actual feed revocation and real checks. Package the patched version as the protected default with an isolated explicit training replay, then retest after packaging. Retain evidence across reset and write successful report results only after they occur.
+
+Implementation is authorised and needs no further planning approval. Publication and archival remain subject to the explicit approval steps already required in the project documents, against concrete reviewed content and a verified release respectively. The 20:00 Brussels deadline remains in force; simplify presentation before reducing evidence, beginner usability or verification.
+
+The existing project brief records Adrian's request for AI pentesting agent swarms exchanging red/blue work. The plan specifies three specialist Codex agents and the main session as coordinator, one discovery round and one remediation/retest round. No red/blue exercise agents have been run yet; the two planning reviewers are separate from that exercise. See the plan for roles, time limits, evidence logging and honest replay labelling. Do not begin a new independent orchestration product or install a named AI-Pen framework without identifying that need.
+
+## Accepted scope
+
+Gallantir is the fictional antagonist. NextVoice is a broader youth rights organisation. Members meet globally through an MMO guild and community Discord to have fun, and have encountered increased surveillance. There is no geographical framing. Use an Anonymous-inspired terminal with dark fantasy watchtower imagery, contrasted with a corporate dashboard and a Discord-style mock guild view.
+
+The user wants both offensive discovery and a protective outcome, a playable lab and a report. Codex prepares the lab and guides the user. The earlier four-hour estimate is superseded by the schedule ending at 20:00, including publication, archival and contingency. Simplify presentation if needed.
+
+The story is agreed and saved in STORY.md. NextVoice challenges purchases of systems profiling young people's political activity. Gallantir's leadership knowingly surveils it to protect sales, using a raid companion add-on. A private guild joke appears in a sales presentation as a risk indicator. NextVoice's procurement hearing is tomorrow in the fictional timeline. The chosen success ending is Victory With Loose Ends: Collection stops and one fictional sale is paused, while Gallantir remains powerful. Retain three evidence-based endings with incomplete attempts separately labelled. Story facts are synthetic narrative premises; real learning and security results require recorded requests, source repair and retests.

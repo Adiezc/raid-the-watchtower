@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0c1119">
+  <title>Raid the Watchtower · A guided security story</title>
+  <link rel="stylesheet" href="/styles.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to the investigation</a>
+  <header class="masthead">
+    <a class="brand" href="#guild" aria-label="Raid the Watchtower home">
+      <svg viewBox="0 0 40 48" aria-hidden="true"><path d="M9 4h6v7h5V4h6v7h5V4h6v15l-4 4v19H9V23l-4-4V4h4Zm8 24v14h8V28a4 4 0 0 0-8 0Z"/></svg>
+      <span>RAID THE<br><strong>WATCHTOWER</strong></span>
+    </a>
+    <div class="masthead-right"><span class="local-badge"><i></i> Fictional local lab</span><span class="build-badge" data-mode>Connecting…</span></div>
+  </header>
+
+  <div class="shell">
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="hero-copy">
+        <p class="eyebrow"><span class="gold-line"></span> A STORY YOU CAN INVESTIGATE</p>
+        <h1 id="hero-title">Every watchtower<br>has a <em>blind spot.</em></h1>
+        <p class="hero-description">A private guild conversation has appeared in a company's presentation. Follow the clue, explain what you find and help protect the community.</p>
+        <div class="hero-tags"><span>Beginner friendly</span><span>No coding needed</span><span>Entirely fictional</span></div>
+      </div>
+      <div class="tower-art" aria-hidden="true">
+        <div class="tower-halo"></div>
+        <svg viewBox="0 0 360 245"><defs><linearGradient id="towerG" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#647b86"/><stop offset="1" stop-color="#243641"/></linearGradient></defs><path class="moon" d="M281 40a34 34 0 0 1-39 47 34 34 0 1 0 39-47"/><path class="mountain-back" d="m0 192 71-62 66 41 57-36 81 45 58-33 27 45v53H0Z"/><path class="mountain-front" d="m0 219 87-47 51 31 40-20 38 32 65-23 79 26v27H0Z"/><path fill="url(#towerG)" d="M143 214V96l-13-13V54h16v17h15V54h16v17h16V54h16v17h15V54h16v29l-13 13v118Z"/><path fill="#1c2b34" d="M187 96h40v118h-40Z"/><path class="tower-stone" d="M143 98h84m-84 24h84m-84 24h84m-84 24h84m-84 24h84m-66-96v24m32 0v24m-44 0v24m53 0v24"/><path class="window" d="M162 109v17h12v-17Zm36 34v17h11v-17Z"/><path fill="#111e28" d="M171 214v-26a13 13 0 0 1 26 0v26Z"/><path class="flagpole" d="M195 54V12"/><path class="flag" d="m196 13 42 6-12 10-30-5Z"/><path class="tree" d="m77 191 12-24 12 24h-9v23h-6v-23Zm185 21 17-35 17 35h-13v28h-7v-28Z"/><path class="star" d="m99 46 2 5 5 2-5 2-2 5-2-5-5-2 5-2Z"/><circle cx="54" cy="81" r="1.5" fill="#75878b"/><circle cx="314" cy="115" r="1.5" fill="#75878b"/></svg>
+        <span class="art-caption">THE GUILD'S PERIMETER · TRAINING ENVIRONMENT</span>
+      </div>
+    </section>
+
+    <div class="connection-banner" id="connection-banner" role="status" hidden></div>
+    <section class="welcome-strip" aria-label="How to use this lab">
+      <span class="welcome-icon" aria-hidden="true">✦</span>
+      <p><strong>Start with the story.</strong> Read the guild messages, then visit CivicLens to compare the evidence. Every step explains what to do. You can ask for a hint whenever you need one.</p>
+      <button class="text-button" id="show-help" aria-expanded="false" aria-controls="beginner-help">How this works <span aria-hidden="true">↗</span></button>
+    </section>
+    <div class="beginner-help" id="beginner-help" hidden>
+      <p><strong>What you are doing:</strong> Testing a made-up company's website on your own computer. You will make a request, see the response and describe what it means. All people, messages and organisations here are fictional.</p>
+      <p><strong>Your boundary:</strong> Stay inside this training site. The analyst account is meant to see two records. Use the supplied story clues only. You do not need a terminal, developer tools or cybersecurity experience.</p>
+      <p><strong>Two roles:</strong> First you investigate as an analyst. Later you become a training responder, with an access code from Codex. Codex handles the code repair; you check whether the protection really works.</p>
+    </div>
+
+    <ol class="stepper" aria-label="Investigation progress">
+      <li data-step="story" class="current"><span class="step-number">1</span><div><strong>Read the story</strong><small>Find your first clue</small></div></li>
+      <li data-step="records"><span class="step-number">2</span><div><strong>Inspect a record</strong><small>Compare what you see</small></div></li>
+      <li data-step="notes"><span class="step-number">3</span><div><strong>Record your finding</strong><small>Explain it in your words</small></div></li>
+      <li data-step="defence"><span class="step-number">4</span><div><strong>Check the defence</strong><small>Test the real protection</small></div></li>
+    </ol>
+
+    <nav class="view-tabs" role="tablist" aria-label="Investigation locations">
+      <button id="tab-guild" role="tab" aria-selected="true" aria-controls="panel-guild" data-tab="guild"><span class="tab-icon" aria-hidden="true">#</span><span>Guild commons<small>Start with the conversation</small></span><span class="tab-arrow" aria-hidden="true">↗</span></button>
+      <button id="tab-civiclens" role="tab" aria-selected="false" aria-controls="panel-civiclens" tabindex="-1" data-tab="civiclens"><span class="tab-icon lens-icon" aria-hidden="true">◈</span><span>CivicLens<small>Explore the company records</small></span><span class="tab-arrow" aria-hidden="true">↗</span></button>
+      <button id="tab-watchtower" role="tab" aria-selected="false" aria-controls="panel-watchtower" tabindex="-1" data-tab="watchtower"><span class="tab-icon" aria-hidden="true">♜</span><span>The watchtower<small>Test and protect the guild</small></span><span class="tab-arrow" aria-hidden="true">↗</span></button>
+    </nav>
+
+    <main id="main-content" class="workspace" tabindex="-1">
+      <div class="main-panels">
+        <section id="panel-guild" class="view-panel guild-panel" role="tabpanel" aria-labelledby="tab-guild">
+          <div class="panel-header"><div><p class="eyebrow muted">THE COMMUNITY</p><h2><span class="hash">#</span> guild-commons</h2></div><span class="small-badge" data-mode>Connecting…</span></div>
+          <div class="guild-topic"><span aria-hidden="true">☕</span><p>A home for adventurers, plans and the occasional very bad pun.</p></div>
+          <div class="message-list" id="message-list"><p class="loading-copy">Fetching the fictional guild conversation…</p></div>
+          <div class="guild-next"><div class="next-number">01</div><div><h3>Something sounds familiar.</h3><p>Take the conversation with you. In the next location, a company slide may have a clue.</p></div><button class="button button-gold" data-go="civiclens">Visit CivicLens <span aria-hidden="true">→</span></button></div>
+        </section>
+
+        <section id="panel-civiclens" class="view-panel civic-panel" role="tabpanel" aria-labelledby="tab-civiclens" hidden>
+          <div class="civic-header"><div class="civic-logo"><span aria-hidden="true">◈</span><div>Gallantir<small>CIVICLENS INTELLIGENCE</small></div></div><span class="civic-status" data-mode>Connecting…</span></div>
+          <div class="civic-body">
+            <div class="civic-section-heading"><div><p class="eyebrow">CLIENT BRIEFING</p><h2>Community insights,<br>at a glance.</h2></div><span class="civic-pill">DEMO WORKSPACE</span></div>
+            <article class="slide-card" aria-labelledby="slide-title"><div class="slide-kicker"><span>EXCERPT FROM A PRESENTATION</span><span id="slide-source">Loading reference…</span></div><h3 id="slide-title">Loading the briefing…</h3><blockquote id="slide-quote"></blockquote><p id="slide-claim"></p><div class="slide-footer"><span>Gallantir · CivicLens</span><button class="button button-civic" id="save-clue" disabled>Save this clue</button></div></article>
+            <div class="first-thought"><strong>Pause for your first thought.</strong><p>Save the clue, then write what you noticed and your first explanation in the evidence notebook. It is fine to be unsure. Save those notes before testing an idea.</p><button class="text-button" data-focus-notebook>Write my first thought <span aria-hidden="true">↗</span></button></div>
+            <div class="account-scope"><span class="account-mark" aria-hidden="true">◎</span><div><strong id="account-name">Your training account</strong><p id="account-scope">Your account permissions will appear when the lab connects.</p></div></div>
+            <div class="civic-subheading"><h3>Your available records</h3><span class="muted-small">A record is a saved collection of information.</span></div>
+            <div class="dossier-list" id="dossier-list"><p class="loading-copy">Loading records…</p></div>
+            <section class="request-workbench" aria-labelledby="request-heading">
+              <div><p class="eyebrow">TRY A REQUEST</p><h3 id="request-heading">Open a record by reference</h3><p>First open one of the records your account is allowed to see. Then use a single reference from the story to test your idea. Compare what you expect with what the server actually returns.</p></div>
+              <form id="record-form"><label for="record-reference">Record reference</label><div class="request-input-row"><input id="record-reference" name="reference" type="number" min="1" max="999999" value="101" inputmode="numeric" required aria-describedby="record-reference-help"><button class="button button-civic" id="open-record" disabled>Open record <span aria-hidden="true">→</span></button></div><small id="record-reference-help">Enter the digits only. For example, CL-101 means 101.</small></form>
+            </section>
+            <section class="record-response" id="record-response" aria-live="polite" aria-labelledby="response-heading" hidden><div class="response-label"><span id="response-symbol" aria-hidden="true"></span><h3 id="response-heading"></h3></div><p id="response-explanation"></p><div id="record-content"></div><button class="button button-civic" id="save-record" hidden>Save this response as evidence</button><details class="technical-details"><summary>Technical details · optional</summary><div id="record-request-meta"></div><pre id="record-json"></pre></details></section>
+          </div>
+        </section>
+
+        <section id="panel-watchtower" class="view-panel watchtower-panel" role="tabpanel" aria-labelledby="tab-watchtower" hidden>
+          <div class="panel-header"><div><p class="eyebrow muted">THE INVESTIGATION & DEFENCE</p><h2>The watchtower</h2></div><span class="small-badge" data-mode>Connecting…</span></div>
+          <div class="watchtower-body">
+            <div class="investigation-card"><span class="large-sigil" aria-hidden="true">♜</span><div><h3>What have you discovered?</h3><p>Use the evidence notebook to explain what you observed and what you think caused it. It is fine to be unsure. Your own explanation matters more than technical words.</p><button class="text-button" id="focus-notebook">Write in the notebook <span aria-hidden="true">↗</span></button></div></div>
+            <div class="role-divider"><span>WHEN YOU ARE READY</span></div>
+            <section class="responder-section" aria-labelledby="responder-heading"><p class="eyebrow">SWITCH ROLES</p><h3 id="responder-heading">Become the training responder</h3><p>A responder is someone who helps stop a problem and checks the repair. Discuss your saved finding with Codex first. AI helpers independently check your finding, then Codex explains the repair and provides the training responder code.</p><form id="responder-form"><label for="responder-code">Training responder code</label><div class="request-input-row"><input id="responder-code" type="password" autocomplete="off" placeholder="Code provided by Codex" required><button class="button button-gold" id="unlock-responder" disabled>Switch role</button></div></form><p class="inline-status" id="responder-feedback" role="status"></p></section>
+            <section id="defence-controls" hidden><div class="role-active"><span aria-hidden="true">✓</span><div><strong>Training responder role active</strong><p>You can now run the defence checks in this fictional lab.</p></div></div>
+              <article class="defence-card"><div class="card-number">A</div><div><h3>Check the message feed</h3><p>The message feed is a connection that can continue receiving new guild activity. Test its actual state before and after switching it off.</p><div class="collector-state" id="collector-state">Checking message feed state…</div><div class="button-row"><button class="button button-outline" id="simulate-event">Send one fictional test event</button><button class="button button-gold" id="revoke-collector">Switch off the message feed</button></div><p class="inline-status" id="collector-feedback" role="status"></p><details class="technical-details"><summary>What this is called technically · optional</summary><p>The integration forwards events to a collector, which stores incoming messages. Revoking the integration disables its credential so that new events are rejected.</p></details></div></article>
+              <article class="defence-card"><div class="card-number">B</div><div><h3>Ask Codex to apply the permission repair</h3><p>Tell Codex you are ready for the blue team repair. Codex changes the server code, which decides which accounts may open each record. You do not need to edit code.</p><p class="muted-small">The repair has to happen in the real server. This page cannot apply it.</p></div></article>
+              <article class="defence-card"><div class="card-number">C</div><div><h3>Run the real protection checks</h3><p>After the repair, check both record access and the data connection. A success message is only meaningful if the tests pass.</p><div class="button-row"><button class="button button-gold" id="verify-mission">Run protection checks</button><button class="button button-outline" id="refresh-status">Refresh actual state</button></div><p class="inline-status" id="verify-feedback" role="status"></p></div></article>
+              <details class="declaration-details"><summary>Optional: record your current conclusion</summary><p>This records a claim for the exercise. It does not make the checks pass or confirm success.</p><button class="button button-outline" id="declare-victory">I think protection is complete</button><p class="inline-status" id="declaration-feedback" role="status"></p></details>
+            </section>
+            <section class="verification-panel" id="verification-panel" aria-live="polite"><p class="eyebrow muted">VERIFIED OUTCOME</p><h3 id="outcome-title">The investigation is still open</h3><p id="outcome-explanation">Read the story, save evidence and write your findings. Defence results will appear here after real checks run.</p><ul id="outcome-remaining"></ul><div id="verification-checks"></div><details class="technical-details" id="verification-technical" hidden><summary>Check results · technical details</summary><pre id="verification-json"></pre></details></section>
+          </div>
+        </section>
+      </div>
+
+      <aside class="notebook" aria-labelledby="notebook-title">
+        <div class="notebook-heading"><span aria-hidden="true">▤</span><div><p class="eyebrow muted">YOURS TO DISCOVER</p><h2 id="notebook-title">Evidence notebook</h2></div><span class="notebook-count" id="evidence-count">0</span></div>
+        <p class="notebook-intro">Your notes and saved clues stay with you as you move between locations.</p>
+        <div class="saved-evidence" id="saved-evidence"><div class="empty-evidence"><span aria-hidden="true">⌑</span><p>No evidence saved yet.<br>Your first clue is in CivicLens.</p></div></div>
+        <form id="notes-form"><label for="observation">What did you notice?</label><textarea id="observation" rows="4" maxlength="8000" placeholder="Describe what you actually saw. A sentence is enough." aria-describedby="observation-help"></textarea><small id="observation-help">An observation is something you saw in the story or in a response.</small><label for="hypothesis">What might explain it?</label><textarea id="hypothesis" rows="3" maxlength="8000" placeholder="Your best explanation, even if you are unsure." aria-describedby="hypothesis-help"></textarea><small id="hypothesis-help">A hypothesis is an explanation you can test.</small><div class="notes-save-row"><button class="button button-gold" id="save-notes" disabled>Save my notes</button><span id="notes-state" aria-live="polite">Not saved yet</span></div></form>
+        <p class="inline-status" id="notes-feedback" role="status"></p>
+        <div class="hint-box"><div><span aria-hidden="true">✧</span><h3>A little help?</h3></div><p id="hint-intro">Clues unfold one at a time. Try an idea before opening the next hint.</p><button class="text-button" id="next-hint">Show the first hint <span aria-hidden="true">+</span></button><ol id="hint-list"></ol></div>
+        <details class="glossary"><summary>Plain-language field guide</summary><dl id="glossary-list"><dt>Server</dt><dd>The program that receives a request and decides what response to send.</dd><dt>Permission</dt><dd>A rule about what an account is allowed to see or do.</dd><dt>Evidence</dt><dd>A saved clue or actual response that supports your explanation.</dd></dl></details>
+      </aside>
+    </main>
+    <footer><span class="footer-brand">RAID THE WATCHTOWER</span><p>Fictional names. Local requests. Real lessons.</p><span>No affiliation with Anonymous or any real organisation.</span></footer>
+  </div>
+  <div class="toast" id="toast" role="status" hidden></div>
+</body>
+</html>
