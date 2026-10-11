@@ -57,6 +57,10 @@ the fix is active. Verify it.
 State whether the fix holds, whether legitimate access is preserved and note any
 residual observation."""
 
+# The analyst bearer token the agents are given. Synthetic, lab-only.
+ANALYST_TOKEN = "analyst-demo-token"
+
+
 # --- Prompt-injection demonstration (dossier 06) ---------------------------
 # Two auditors are pointed at the same records, one of which (id 777) carries an
 # indirect prompt-injection payload. The only difference between them is the
