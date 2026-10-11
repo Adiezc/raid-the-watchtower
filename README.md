@@ -1,6 +1,9 @@
 # Raid the Watchtower
 
 [![tests](https://github.com/Adiezc/raid-the-watchtower/actions/workflows/tests.yml/badge.svg)](https://github.com/Adiezc/raid-the-watchtower/actions/workflows/tests.yml)
+[![license: MIT](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![python 3](https://img.shields.io/badge/python-3-blue.svg)
+![scope: defensive & synthetic](https://img.shields.io/badge/scope-defensive%20%26%20synthetic-brightgreen.svg)
 
 **An AI agent swarm, directed by a human, red-teams and blue-teams a set of
 security threats, wrapped in a short fictional story.**
@@ -11,6 +14,9 @@ red/blue agent swarm** to do that analysis, with a person in the loop to direct
 the rounds and decide what to trust. One threat is a real, runnable lab. The rest
 are safe, synthetic studies. Everything here is fictional and defensive.
 
+**[Idea](#the-idea-in-one-minute) · [How it fits](#how-it-fits-together) · [Threats](#the-threats-dossiers) · [Run it](#run-it) · [Honesty](#honest-account) · [References](#references)**
+
+> [!NOTE]
 > New to the project? Read [`story.md`](story.md) for the world, then
 > [`swarm.md`](swarm.md) for how the agent team works. Then pick a dossier.
 
@@ -64,16 +70,15 @@ stop it 🔵, set in the story, with an honest note on limits.
 
 **Real versus illustrative is deliberate and stated up front.** Dossiers 01 and 06
 are running demonstrations you can reproduce. Dossiers 02 to 05 are conceptual
-analyses. They
-explain mechanics and defences and contain **no working attack code, malware,
-phishing kits or load-generation tooling**, by design. That is both the ethical
-line and the honest-portfolio line: this shows understanding and orchestration,
-not a weapons cache.
+analyses. They explain mechanics and defences and contain **no working attack
+code, malware, phishing kits or load-generation tooling**, by design. That is both
+the ethical line and the honest-portfolio line: this shows understanding and
+orchestration, not a weapons cache.
 
 ### Framework mapping
 
-Each threat is tagged against the standard catalogues, so the coverage is legible
-to anyone who speaks the industry's language.
+<details>
+<summary>Each threat tagged against MITRE ATT&CK and OWASP, so the coverage is legible to anyone who speaks the industry's language (click to expand).</summary>
 
 | # | Threat | MITRE ATT&CK | OWASP |
 | --- | --- | --- | --- |
@@ -84,31 +89,52 @@ to anyone who speaks the industry's language.
 | 05 | DDoS | [T1498](https://attack.mitre.org/techniques/T1498/) | Availability / resource exhaustion |
 | 06 | Prompt injection | [T1059](https://attack.mitre.org/techniques/T1059/) (abuse of an executor) | [LLM01:2025](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) |
 
-## The one real demo
+</details>
 
-A tiny standard-library server with a genuine broken-object-level-authorization
-flaw. No dependencies, loopback only, synthetic data.
+## Run it
+
+Two things are runnable with no dependencies and no API key.
+
+**1. The one real flaw (the lab).** A tiny standard-library server with a genuine
+broken-object-level-authorization flaw. Loopback only, synthetic data.
 
 ```bash
-python3 server.py --vulnerable    # flaw active:    GET /api/dossiers/103 -> 200 (leak)
-python3 server.py                 # protected default: same request -> 403
-python3 -m unittest discover -s tests
+python3 server.py --vulnerable    # flaw active:        GET /api/dossiers/103 -> 200 (leak)
+python3 server.py                 # protected default:  same request         -> 403
+python3 -m unittest discover -s tests   # 9 checks
 ```
 
-Full walkthrough in [`lab/README.md`](lab/README.md) and
+**2. The swarm's plumbing and scope guard.** Proves the boundary without calling
+any model: it starts the lab, exercises the scope-locked tool and shows an
+out-of-scope path refused in code.
+
+```bash
+python3 swarm/run_exercise.py --self-check
+```
+
+A full swarm run (`python3 swarm/run_exercise.py`) needs the `anthropic` SDK and
+an API key. Captured [`swarm/transcripts/`](swarm/transcripts/) let you read real
+runs without one. Full walkthrough in [`lab/README.md`](lab/README.md) and
 [dossier 01](dossiers/01-broken-access-control.md).
 
 ## Honest account
+
+This section is the point of the project, not a disclaimer at the end of it.
 
 - **Who built this.** The lab and the dossiers were produced with AI agents that
   I directed, scoped and reviewed. I am not claiming hands-on exploit-development
   experience. I am showing threat literacy and the ability to orchestrate and
   verify an AI red/blue team. That framing is the point, and it is true.
-- **What is proven.** Only dossier 01 is a live, reproducible result. The rest are
-  analyses, labelled as such.
-- **Scope.** Fictional world, synthetic data, loopback only, defensive framing. No
-  real people, companies or systems are targeted. "Gallantir" is not a real
-  company.
+- **What is proven.** Only dossiers 01 and 06 are live, reproducible results. The
+  rest are analyses, labelled as such.
+- **What the guards really prove.** The swarm's scope guard, per-agent call budget
+  and repeat guard are enforced in code, so they hold whatever a prompt or a
+  poisoned record says. The agents resisting injection on their own is luck, not a
+  control (see [dossier 06](dossiers/06-prompt-injection.md)).
+
+> [!IMPORTANT]
+> **Scope.** Fictional world, synthetic data, loopback only, defensive framing. No
+> real people, companies or systems are targeted. "Gallantir" is not a real company.
 
 ## References
 
@@ -122,21 +148,25 @@ Full walkthrough in [`lab/README.md`](lab/README.md) and
 - AI red/blue research and tooling: see the "Where this is going" section of
   [`swarm.md`](swarm.md).
 - PentAGI, a production-scale autonomous multi-agent pentest system (MIT),
-  prior art for this project's human-directed red/blue swarm idea.
+  prior art for this project's human-directed red/blue swarm, and the source of
+  the per-agent tool-call budget idea.
   <https://github.com/vxcontrol/pentagi>
 - HexStrike AI, an MCP-native pentest framework exposing 150+ tools (MIT),
-  cited as a contrast on scope enforcement (see [`swarm.md`](swarm.md)).
+  cited as a contrast on scope enforcement and in [dossier 06](dossiers/06-prompt-injection.md).
   <https://github.com/0x4m4/hexstrike-ai>
 
-## Layout
+<details>
+<summary><strong>Repository layout</strong></summary>
 
 ```
 README.md     story.md     swarm.md        LICENSE
 server.py                  the one real, runnable flaw
 lab/          policy.py, fixtures.json, README.md
 swarm/        run_exercise.py, roles.py, transcripts/   the runnable agent swarm
-tests/        test_lab.py  7 checks
+tests/        test_lab.py  9 checks
 dossiers/     01 to 06     the red/blue threat studies
 ```
+
+</details>
 
 MIT licensed. Fictional throughout.
