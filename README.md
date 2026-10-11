@@ -121,6 +121,12 @@ Full walkthrough in [`lab/README.md`](lab/README.md) and
   <https://docs.python.org/3/library/http.server.html>
 - AI red/blue research and tooling: see the "Where this is going" section of
   [`swarm.md`](swarm.md).
+- PentAGI, a production-scale autonomous multi-agent pentest system (MIT),
+  prior art for this project's human-directed red/blue swarm idea.
+  <https://github.com/vxcontrol/pentagi>
+- HexStrike AI, an MCP-native pentest framework exposing 150+ tools (MIT),
+  cited as a contrast on scope enforcement (see [`swarm.md`](swarm.md)).
+  <https://github.com/0x4m4/hexstrike-ai>
 
 ## Layout
 

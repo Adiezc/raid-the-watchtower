@@ -61,6 +61,17 @@ residual observation."""
 ANALYST_TOKEN = "analyst-demo-token"
 
 
+# --- Orchestrator guardrails (enforced in run_exercise.py) -----------------
+# Borrowed, and scaled down for this tiny lab, from production agent swarms:
+# PentAGI (vxcontrol/pentagi) caps each agent with a hard tool-call limit, and
+# both PentAGI's Reflector and HexStrike AI's (0x4m4/hexstrike-ai) failure
+# recovery break an agent out of repeated identical calls. A legitimate run of
+# any role here needs only a handful of calls, so these never bite a good run;
+# they stop a runaway, or an agent that a poisoned record talks into a loop.
+TOOL_BUDGET = 15      # max successful tool calls per agent per run
+REPEAT_LIMIT = 3      # identical calls allowed before the orchestrator refuses
+
+
 # --- Prompt-injection demonstration (dossier 06) ---------------------------
 # Two auditors are pointed at the same records, one of which (id 777) carries an
 # indirect prompt-injection payload. The only difference between them is the

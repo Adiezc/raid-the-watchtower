@@ -98,6 +98,23 @@ replace security professionals or scale cleanly to production.
 - CyberBattleSim studies red/blue reinforcement-learning agents in simulation, a
   different approach from LLM agents, not validation of this design:
   <https://arxiv.org/abs/2304.11052>
+- PentAGI (`vxcontrol/pentagi`, MIT) is the production-scale instance of this
+  project's thesis: a human-authorized multi-agent system (Orchestrator,
+  Researcher, Developer, Executor, plus supervision agents like Reflector and
+  Adviser) that runs real security tools inside Docker sandboxes, with per-agent
+  hard tool-call limits, a pgvector knowledge store and full observability. This
+  project is a deliberately tiny, loopback-only, human-in-the-loop demonstration
+  of the same red/blue orchestration idea. Several design choices here (the
+  task decomposition, the per-agent call caps, the scope guard) echo patterns
+  PentAGI implements at scale: <https://github.com/vxcontrol/pentagi>
+- HexStrike AI (`0x4m4/hexstrike-ai`, MIT) is a third point on the autonomy
+  spectrum: an MCP server exposing 150+ security tools to any MCP client, with
+  an intelligent decision engine for tool selection and failure recovery. It is
+  a useful contrast rather than a template here, because its scope control is
+  guidance-level (run in isolated VMs, keep oversight) rather than enforced in
+  code. This project takes the opposite stance on purpose: one read-only tool,
+  scope enforced in code, and a human who verifies before anything is trusted.
+  <https://github.com/0x4m4/hexstrike-ai>
 
 The honest limit: agents are powerful force-multipliers and poor sole deciders.
 The human who can tell *correct* from *actually right* is still the job.

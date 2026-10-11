@@ -40,6 +40,17 @@ The delivery detail matters: record 777 was only reachable **because** of the
 access-control flaw in [dossier 01](01-broken-access-control.md). The same hole
 that leaks data is the hole that feeds the agent its poison.
 
+**Real-world echo.** This mechanism is not hypothetical. HexStrike AI
+([`0x4m4/hexstrike-ai`](https://github.com/0x4m4/hexstrike-ai)), an MCP framework
+that hands an LLM 150-plus offensive security tools, advises users in its own
+documentation to state their role and target ownership in the prompt so the model
+will go ahead and run the tools. That is the same lever seen from the operator's
+side: natural-language framing, not a code permission, deciding whether an
+autonomous agent acts. The vector differs (a cooperating operator steering the
+model, versus a poisoned record steering it indirectly) but the weakness is one
+and the same, and it is exactly why the defence below cannot be prompt text.
+Credit to that project for making the pattern legible.
+
 ## 🔵 Blue: how you see it and stop it
 
 We ran two real auditors against the poisoned record. The honest result and the

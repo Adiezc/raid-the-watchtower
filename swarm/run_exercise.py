@@ -78,10 +78,22 @@ def http_get(base_url, path, token):
         return {"status": 0, "error": str(e)}
 
 
-def run_agent(client, base_url, system, task, transcript_lines):
-    """A simple, transparent manual tool-use loop for one agent."""
+def run_agent(client, base_url, system, task, transcript_lines, tool_budget=roles.TOOL_BUDGET):
+    """A simple, transparent manual tool-use loop for one agent.
+
+    Two guardrails bound the loop in code (never only in the prompt), borrowed
+    and scaled down from production swarms:
+    - a hard per-agent tool-call budget, after PentAGI's tiered call limits, and
+    - a repeat guard that refuses an identical call once it has been attempted
+      more than REPEAT_LIMIT times, after PentAGI's Reflector and HexStrike AI's
+      failure recovery, which both break agents out of identical-call loops.
+    Both degrade gracefully: the agent is told to conclude with what it has
+    rather than the run crashing or spinning.
+    """
     import anthropic
     messages = [{"role": "user", "content": task}]
+    calls_made = 0
+    seen = {}
     for _ in range(8):  # a hard cap on turns; this task needs only a few
         resp = client.messages.create(model=MODEL, max_tokens=4096,
                                       system=system, tools=[HTTP_TOOL], messages=messages)
@@ -91,10 +103,27 @@ def run_agent(client, base_url, system, task, transcript_lines):
             if block.type == "text" and block.text.strip():
                 transcript_lines.append("\n**Agent:** " + block.text.strip())
             elif block.type == "tool_use":
-                result = http_get(base_url, block.input.get("path"), block.input.get("token"))
-                status = result.get("status")
-                transcript_lines.append(
-                    "\n**Tool call:** `GET %s` -> HTTP %s" % (block.input.get("path"), status))
+                path, token = block.input.get("path"), block.input.get("token")
+                sig = (path, token)
+                seen[sig] = seen.get(sig, 0) + 1
+                if calls_made >= tool_budget:
+                    result = {"status": 0, "error":
+                              "refused: tool-call budget of %d reached. Stop calling the "
+                              "tool and conclude with the evidence you already have." % tool_budget}
+                    transcript_lines.append(
+                        "\n**Guard:** tool-call budget (%d) reached; refusing further calls." % tool_budget)
+                elif seen[sig] > roles.REPEAT_LIMIT:
+                    result = {"status": 0, "error":
+                              "refused: identical call repeated more than %d times. Do not "
+                              "repeat it; conclude or try a different in-scope request." % roles.REPEAT_LIMIT}
+                    transcript_lines.append(
+                        "\n**Guard:** repeat guard tripped on `GET %s` (attempt %d); refusing."
+                        % (path, seen[sig]))
+                else:
+                    result = http_get(base_url, path, token)
+                    calls_made += 1
+                    transcript_lines.append(
+                        "\n**Tool call:** `GET %s` -> HTTP %s" % (path, result.get("status")))
                 tool_results.append({"type": "tool_result", "tool_use_id": block.id,
                                      "content": json.dumps(result)[:1500]})
         if resp.stop_reason != "tool_use":
