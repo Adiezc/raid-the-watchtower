@@ -1,5 +1,7 @@
 # Raid the Watchtower
 
+[![tests](https://github.com/Adiezc/raid-the-watchtower/actions/workflows/tests.yml/badge.svg)](https://github.com/Adiezc/raid-the-watchtower/actions/workflows/tests.yml)
+
 **An AI agent swarm, directed by a human, red-teams and blue-teams a set of
 security threats, wrapped in a short fictional story.**
 
@@ -22,6 +24,30 @@ A blue defender fixes and proves it. A human coordinator sets scope and calls
 what is real. The swarm is a runnable script, not just a description (see
 [`swarm/`](swarm/) and [`swarm.md`](swarm.md)).
 
+## How it fits together
+
+The story's leak and the agent swarm are two views of the same system: the swarm
+investigates the chain, and the human coordinates it.
+
+```mermaid
+flowchart TB
+  subgraph chain["The attack chain (story)"]
+    direction LR
+    guild["Private guild chat"] -->|raid-companion trojan| civ["CivicLens records"]
+    civ -->|BOLA leak| slide["Gallantir sales slide"]
+    civ -. poisoned record .-> inj["Prompt injection at the AI auditor"]
+  end
+  subgraph swarm["The agent swarm (directed by a human)"]
+    direction LR
+    coord["Human coordinator: scope, order, verify"]
+    coord --> scout["Red scout"]
+    coord --> val["Red validator"]
+    coord --> blue["Blue defender"]
+    scout & val & blue -->|scope-locked http_get| lab["Local lab (loopback)"]
+  end
+  swarm -->|finds, fixes, retests| chain
+```
+
 ## The threats (dossiers)
 
 Each dossier is a red/blue study: how the attack works 🔴 and how you detect and
@@ -43,6 +69,20 @@ explain mechanics and defences and contain **no working attack code, malware,
 phishing kits or load-generation tooling**, by design. That is both the ethical
 line and the honest-portfolio line: this shows understanding and orchestration,
 not a weapons cache.
+
+### Framework mapping
+
+Each threat is tagged against the standard catalogues, so the coverage is legible
+to anyone who speaks the industry's language.
+
+| # | Threat | MITRE ATT&CK | OWASP |
+| --- | --- | --- | --- |
+| 01 | Broken access control | [T1190](https://attack.mitre.org/techniques/T1190/) | [API1:2023 BOLA](https://api-security.owasp.org/editions/2023/en/0xa1-broken-object-level-authorization/) |
+| 02 | Phishing | [T1566](https://attack.mitre.org/techniques/T1566/) | Human layer (social engineering) |
+| 03 | Trojans | [T1195](https://attack.mitre.org/techniques/T1195/) | Supply-chain / malicious dependency |
+| 04 | Worms | [T1210](https://attack.mitre.org/techniques/T1210/) | Patch and exposure management |
+| 05 | DDoS | [T1498](https://attack.mitre.org/techniques/T1498/) | Availability / resource exhaustion |
+| 06 | Prompt injection | [T1059](https://attack.mitre.org/techniques/T1059/) (abuse of an executor) | [LLM01:2025](https://genai.owasp.org/llmrisk/llm01-prompt-injection/) |
 
 ## The one real demo
 
